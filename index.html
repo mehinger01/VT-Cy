@@ -3,92 +3,570 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Skill Quest - First Adventure</title>
+<title>ScholarForge Success System™ — Learning Mission 1</title>
 <style>
 :root{--bg:#f2f7ff;--card:#ffffff;--ink:#17324d;--muted:#5d7085;--blue:#2f80ed;--green:#27ae60;--gold:#f2c94c;--orange:#f2994a;--purple:#9b51e0;--line:#d8e3f0;--shadow:0 12px 30px rgba(23,50,77,.12)}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(135deg,#eaf4ff,#fff7e2);color:var(--ink)}
-header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 18px;display:flex;gap:14px;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:10px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--green));display:grid;place-items:center;color:white;font-size:24px;box-shadow:var(--shadow)}h1{font-size:1.25rem;margin:0}.sub{font-size:.86rem;color:var(--muted)}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}select,button,input,textarea{font:inherit}button,.chip{border:0;border-radius:999px;padding:10px 14px;background:var(--blue);color:white;font-weight:700;cursor:pointer;box-shadow:0 6px 16px rgba(47,128,237,.22)}button.secondary{background:white;color:var(--ink);border:1px solid var(--line);box-shadow:none}button.good{background:var(--green)}button.warn{background:var(--orange)}select,input{border:1px solid var(--line);border-radius:12px;padding:9px 10px;background:white;color:var(--ink)}main{max-width:1180px;margin:0 auto;padding:18px;display:grid;grid-template-columns:280px 1fr;gap:18px}.side{position:sticky;top:82px;align-self:start;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px;box-shadow:var(--shadow)}.map-title{font-weight:900;margin-bottom:10px}.navitem{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:16px;padding:10px;margin:8px 0;background:#fbfdff;cursor:pointer}.navitem.active{outline:3px solid rgba(47,128,237,.18);border-color:#88bdfa}.navitem.done{background:#effaf2;border-color:#bde8c8}.badgeRow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.badge{min-height:64px;border-radius:16px;border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#fff;font-size:.78rem;font-weight:800;padding:7px}.badge .emoji{font-size:1.35rem;line-height:1}.content{min-width:0}.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:22px;box-shadow:var(--shadow);margin-bottom:18px}.hero{background:linear-gradient(135deg,#e8f3ff,#fff8dc);border:1px solid #d8e9ff}.kicker{display:inline-block;background:#e9f4ff;color:#1a65b8;border-radius:999px;padding:6px 10px;font-weight:900;font-size:.82rem;margin-bottom:8px}h2{margin:0 0 8px;font-size:1.6rem}.directions{font-size:1.05rem;color:var(--muted);margin-bottom:14px}.prompt{border:1px solid var(--line);border-radius:18px;padding:15px;margin:12px 0;background:#fbfdff}.prompt b{display:block;margin-bottom:8px}.answer{width:100%;min-height:46px;border:1px solid var(--line);border-radius:14px;padding:10px;background:white}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.miniGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.choice{border:1px solid var(--line);border-radius:16px;padding:12px;background:white;cursor:pointer;text-align:center;font-weight:800}.choice.selected{background:#eaf7ee;border-color:#79d794;box-shadow:inset 0 0 0 2px #79d794}.mathline{font-size:1.25rem;font-weight:900}.passage{font-size:1.1rem;line-height:1.55;background:#fffef7;border-left:6px solid var(--gold)}.sectionFoot{display:flex;justify-content:space-between;gap:8px;margin-top:16px}.tiny{font-size:.8rem;color:var(--muted)}#tutorPanel{position:fixed;right:14px;top:84px;width:360px;max-width:calc(100vw - 28px);max-height:calc(100vh - 98px);overflow:auto;background:#122033;color:#eef6ff;border:1px solid #38506e;border-radius:20px;padding:14px;box-shadow:0 18px 40px rgba(0,0,0,.32);z-index:50;display:none}#tutorPanel.open{display:block}#tutorPanel h3{margin:4px 0 10px}#tutorPanel textarea,#tutorPanel input,#tutorPanel select{width:100%;background:#0d1928;color:#eef6ff;border:1px solid #38506e;border-radius:12px;padding:9px;margin:5px 0 10px}.checklist{display:grid;grid-template-columns:1fr 1fr;gap:6px}.checklist label{background:#0d1928;border:1px solid #38506e;border-radius:10px;padding:7px;font-size:.82rem}.stars{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin:6px 0}.stars input{accent-color:#f2c94c}.summaryBox{white-space:pre-wrap;background:#f8fbff;border:1px solid var(--line);border-radius:16px;padding:14px;min-height:160px}.hide{display:none}.studentSafe{font-weight:900;color:#1d6fbf}.danger{background:#eb5757}.quickbar{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.quickbar button{padding:8px 10px;font-size:.86rem}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#eef6ff;color:#1d6fbf;font-size:.8rem;font-weight:900;margin-left:5px}@media(max-width:860px){main{grid-template-columns:1fr}.side{position:relative;top:0}.badgeRow{grid-template-columns:repeat(4,1fr)}.grid,.miniGrid{grid-template-columns:1fr}header{align-items:flex-start;flex-direction:column}.toolbar{width:100%}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(135deg,#eaf4ff,#fff7e2);color:var(--ink)}
+header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--green));display:grid;place-items:center;color:white;font-size:26px;box-shadow:var(--shadow);flex-shrink:0}
+.brandText h1{font-size:1.1rem;margin:0;line-height:1.25}
+.brandText .program{font-size:.72rem;color:var(--muted);font-weight:700;letter-spacing:.03em;text-transform:uppercase}
+.brandText .missionTitle{font-size:.95rem;color:#1a65b8;font-weight:800}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+select,button,input,textarea{font:inherit}
+button{border:0;border-radius:999px;padding:10px 16px;background:var(--blue);color:white;font-weight:700;cursor:pointer;box-shadow:0 6px 16px rgba(47,128,237,.22)}
+button.secondary{background:white;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+button.good{background:var(--green)}
+button.warn{background:var(--orange)}
+button.small{padding:7px 12px;font-size:.85rem;box-shadow:none}
+input,textarea{border:1px solid var(--line);border-radius:12px;padding:9px 10px;background:white;color:var(--ink)}
+.timerBox{display:flex;align-items:center;gap:8px;background:#0d1928;color:#eef6ff;border-radius:999px;padding:8px 14px;font-weight:800;font-variant-numeric:tabular-nums}
+.topnav{position:sticky;top:78px;z-index:15;background:rgba(255,255,255,.9);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);padding:8px 20px;display:flex;gap:8px;flex-wrap:wrap;overflow-x:auto}
+.topnav a{text-decoration:none;font-size:.82rem;font-weight:700;color:var(--muted);background:#fbfdff;border:1px solid var(--line);border-radius:999px;padding:7px 12px;white-space:nowrap}
+.topnav a:hover{color:#1a65b8;border-color:#88bdfa}
+main{max-width:900px;margin:0 auto;padding:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:var(--shadow);margin-bottom:20px}
+.hero{background:linear-gradient(135deg,#e8f3ff,#fff8dc);border:1px solid #d8e9ff}
+.kicker{display:inline-block;background:#e9f4ff;color:#1a65b8;border-radius:999px;padding:6px 12px;font-weight:900;font-size:.9rem;margin-bottom:10px}
+h2{margin:0 0 6px;font-size:1.5rem}
+.subtitle{font-size:1.05rem;color:var(--muted);margin:2px 0 0}
+.missionBody{font-size:1.02rem;line-height:1.6;color:var(--ink)}
+.missionBody ul{margin:8px 0 0;padding-left:22px}
+.missionBody li{margin:4px 0}
+.investigation{margin-bottom:32px}
+.investigation > h2{font-size:1.55rem;display:flex;align-items:center;gap:8px}
+.develops{background:#fbfdff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin:12px 0 18px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.develops h4{margin:0 0 8px;font-size:.85rem;text-transform:uppercase;letter-spacing:.03em;color:#1a65b8}
+.develops ul{margin:0;padding-left:20px;font-size:.92rem;color:var(--ink)}
+.develops li{margin:3px 0}
+.activityCard{border:1px solid var(--line);border-radius:20px;padding:18px;margin:14px 0;background:#fff}
+.activityCard b.activityTitle{display:block;font-size:1.05rem;margin-bottom:6px}
+.activityCard p.activityPrompt{margin:0 0 12px;line-height:1.55}
+.revealRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.revealBox{display:none;margin-top:10px;padding:12px 14px;border-radius:14px;font-size:.95rem;line-height:1.5}
+.revealBox.open{display:block}
+.clueBox{background:#fff8e1;border:1px solid #f0dd9a}
+.compareBox{background:#eafaf0;border:1px solid #b9e8c9}
+.rubricCard{margin-top:8px}
+.rubricCard h3{margin:0 0 4px}
+table.rubric{width:100%;border-collapse:collapse;margin-top:12px;font-size:.92rem}
+table.rubric th,table.rubric td{border:1px solid var(--line);padding:9px;text-align:center}
+table.rubric th{background:#f4f8ff;font-size:.82rem}
+table.rubric td:first-child,table.rubric th:first-child{text-align:left;font-weight:700}
+table.rubric input[type="radio"]{width:18px;height:18px;accent-color:var(--blue)}
+.rubricGuide{margin-top:12px;font-size:.85rem;color:var(--muted);line-height:1.6}
+.rubricGuide b{color:var(--ink)}
+.debrief label{display:block;font-weight:800;margin:14px 0 6px}
+.debrief textarea{width:100%;min-height:70px}
+.debrief textarea.family{min-height:90px}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:20px}
+#summaryOut{width:100%;min-height:220px;white-space:pre-wrap;margin-top:12px}
+@media(max-width:760px){
+ .develops{grid-template-columns:1fr}
+ header{align-items:flex-start;flex-direction:column}
+ .toolbar{width:100%;justify-content:space-between}
+ table.rubric{font-size:.78rem}
+ table.rubric th,table.rubric td{padding:6px}
+}
+@media print{
+ header,.topnav,.revealRow,button,.printHide{display:none !important}
+ .revealBox{display:block !important}
+ body{background:white}
+ .card,.activityCard{box-shadow:none;border:1px solid #ccc}
+}
 </style>
 </head>
 <body>
 <header>
-  <div class="brand"><div class="logo">🧭</div><div><h1>Skill Quest: First Adventure</h1><div class="sub">A friendly first-session discovery tool. Press <b>T</b> for tutor notes.</div></div></div>
-  <div class="toolbar"><input id="studentName" placeholder="Student name" value="Cy"><select id="gradeSelect"><option value="4">Grade 4</option><option value="5" selected>Grade 5</option><option value="6">Grade 6</option></select><button id="saveBtn" class="secondary">Save</button><button id="tutorBtn">Tutor Panel</button></div>
+  <div class="brand">
+    <div class="logo">🧭</div>
+    <div class="brandText">
+      <div class="program">ScholarForge Success System™</div>
+      <h1 class="missionTitle">Learning Mission 1: Becoming a Problem Solver</h1>
+    </div>
+  </div>
+  <div class="toolbar">
+    <input id="studentName" placeholder="Student name" value="Cy" style="width:120px">
+    <div class="timerBox"><span id="timerDisplay">00:00</span></div>
+    <button id="timerToggle" class="secondary small">Start Timer</button>
+    <button id="timerReset" class="secondary small">Reset</button>
+    <button id="printBtn" class="warn small">🖨️ Print / Save PDF</button>
+  </div>
 </header>
+<nav class="topnav printHide">
+  <a href="#today">🎯 Today's Mission</a>
+  <a href="#inv1">🔍 Investigation 1</a>
+  <a href="#inv2">🏗️ Investigation 2</a>
+  <a href="#inv3">✏️ Investigation 3</a>
+  <a href="#inv4">💭 Investigation 4</a>
+  <a href="#inv5">🔢 Investigation 5</a>
+  <a href="#debrief">🎯 Mission Debrief</a>
+</nav>
 <main>
-  <aside class="side">
-    <div class="map-title">Adventure Map</div>
-    <div id="nav"></div>
-    <div class="map-title" style="margin-top:16px">Badges</div>
-    <div class="badgeRow" id="badges"></div>
-    <div class="tiny" style="margin-top:12px">Tip: Keep this student-facing. Use the tutor panel for notes, ratings, and next-session planning.</div>
-  </aside>
-  <section class="content">
-    <div class="card hero"><span class="kicker">Today’s mission</span><h2>Let’s learn how your brain likes to work.</h2><p class="directions">This is not a test. Some challenges may be easy. Some may be tricky. Either way, it helps me build better sessions for you.</p><div class="quickbar"><button onclick="showSection(0)">Start Adventure</button><button class="secondary" onclick="openTutor()">Open Tutor Notes</button></div></div>
-    <div id="sections"></div>
+
+  <section id="today" class="card hero">
+    <span class="kicker">🎯 Today's Mission</span>
+    <p class="subtitle" style="margin-bottom:10px">Building the thinking habits that lead to success in mathematics.</p>
+    <div class="missionBody">
+      <p>Today we are collecting evidence about how you solve problems — not just whether you get the right answer.</p>
+      <p>We'll practice:</p>
+      <ul>
+        <li>Looking carefully</li>
+        <li>Building ideas with objects</li>
+        <li>Explaining our thinking</li>
+        <li>Drawing our ideas</li>
+        <li>Connecting those ideas to mathematics</li>
+      </ul>
+      <p>Every challenge helps us discover strengths and decide what to work on next.</p>
+    </div>
   </section>
+
+  <section id="inv1" class="investigation">
+    <h2>🔍 Investigation 1: Notice</h2>
+    <div class="develops">
+      <div><h4>Academic Skills</h4><ul><li>Pattern recognition</li><li>Visual reasoning</li><li>Comparing information</li></ul></div>
+      <div><h4>Student Success Skills</h4><ul><li>Looking carefully</li><li>Explaining ideas</li><li>Staying flexible</li></ul></div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">Notice and Wonder</b>
+      <p class="activityPrompt">Look at this arrangement: <br><br>🔵🔵🔵&nbsp;&nbsp;&nbsp;🔵🔵🔵🔵🔵&nbsp;&nbsp;&nbsp;🔵🔵<br><br>What do you notice? What do you wonder?</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">Try looking at the groups without counting one at a time — what do you see right away?</div>
+      <div class="revealBox compareBox">There are three groups of circles. One group has more than the others, and one has the fewest. Noticing the groups first (before counting) is a strategy mathematicians use.</div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">Spot the Pattern</b>
+      <p class="activityPrompt">2, 4, 8, 16, __. What comes next? How do you know?</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">Look at what's happening between each number — is it adding the same amount, or something else?</div>
+      <div class="revealBox compareBox">Each number is doubling: 2 → 4 → 8 → 16 → 32. Explaining the rule in words ("it doubles each time") is just as important as getting the next number.</div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">Compare the Groups</b>
+      <p class="activityPrompt">Group A: 🟩🟩🟩🟩🟩🟩🟩&nbsp;&nbsp;&nbsp;Group B: 🟨🟨🟨🟨🟨<br><br>Which group has more? How can you tell without counting one by one?</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">Could you match one square from each group to a partner? What's left over tells you something.</div>
+      <div class="revealBox compareBox">Group A has more — if you match them up one-to-one, Group A has 2 extra squares with no partner. That's a quick way to compare without counting everything.</div>
+    </div>
+
+    <div class="rubricCard">
+      <h3>📈 Evidence Check</h3>
+      <p>Use this quick rubric to capture what we saw during this investigation.</p>
+      <table class="rubric">
+        <tr><th>Evidence Collected</th><th>1 Emerging</th><th>2 Developing</th><th>3 Independent</th><th>4 Extends</th></tr>
+        <tr><td>Academic Thinking</td><td><input type="radio" name="inv1_academic" value="1"></td><td><input type="radio" name="inv1_academic" value="2"></td><td><input type="radio" name="inv1_academic" value="3"></td><td><input type="radio" name="inv1_academic" value="4"></td></tr>
+        <tr><td>Problem Solving</td><td><input type="radio" name="inv1_problem" value="1"></td><td><input type="radio" name="inv1_problem" value="2"></td><td><input type="radio" name="inv1_problem" value="3"></td><td><input type="radio" name="inv1_problem" value="4"></td></tr>
+        <tr><td>Student Success Skills</td><td><input type="radio" name="inv1_success" value="1"></td><td><input type="radio" name="inv1_success" value="2"></td><td><input type="radio" name="inv1_success" value="3"></td><td><input type="radio" name="inv1_success" value="4"></td></tr>
+        <tr><td>Communication</td><td><input type="radio" name="inv1_comm" value="1"></td><td><input type="radio" name="inv1_comm" value="2"></td><td><input type="radio" name="inv1_comm" value="3"></td><td><input type="radio" name="inv1_comm" value="4"></td></tr>
+        <tr><td>Confidence</td><td><input type="radio" name="inv1_conf" value="1"></td><td><input type="radio" name="inv1_conf" value="2"></td><td><input type="radio" name="inv1_conf" value="3"></td><td><input type="radio" name="inv1_conf" value="4"></td></tr>
+      </table>
+      <div class="rubricGuide">
+        <div><b>1 Emerging:</b> needs significant support</div>
+        <div><b>2 Developing:</b> completes with coaching</div>
+        <div><b>3 Independent:</b> completes independently</div>
+        <div><b>4 Extends:</b> explains, teaches, or applies the skill in a new way</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="inv2" class="investigation">
+    <h2>🏗️ Investigation 2: Build</h2>
+    <div class="develops">
+      <div><h4>Academic Skills</h4><ul><li>Number sense</li><li>Comparison</li><li>Equal groups</li></ul></div>
+      <div><h4>Student Success Skills</h4><ul><li>Planning before acting</li><li>Testing ideas</li><li>Trying more than one strategy</li></ul></div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">Build a Number Two Ways</b>
+      <p class="activityPrompt">Using objects (blocks, counters, or coins), build the number 24. Then build it again a completely different way.</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">Think about tens and ones — could you also build it in groups of 2s, or one big pile plus a few more?</div>
+      <div class="revealBox compareBox">One way: 2 groups of 10 plus 4 ones. Another way: 12 groups of 2, or 24 single objects grouped by color. Any accurate way of building 24 counts — the goal is flexibility.</div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">Equal Groups Challenge</b>
+      <p class="activityPrompt">Build 3 equal groups with 5 objects in each group. How many objects are there in all?</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">Could you count all the objects one at a time, or is there a faster way once the groups are built?</div>
+      <div class="revealBox compareBox">3 groups of 5 is 15 objects total. Counting by 5s (5, 10, 15) is faster than counting one at a time — that's the beginning of multiplication thinking.</div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">Build & Compare</b>
+      <p class="activityPrompt">Build two towers: one with 9 blocks and one with 6 blocks. How many more blocks does the taller tower have? Show it with the blocks, not just on paper.</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">Try lining the towers up side by side, block by block. What's left uncovered?</div>
+      <div class="revealBox compareBox">The 9-block tower has 3 more blocks than the 6-block tower. Lining them up shows the "difference" physically — it's the same idea as subtraction.</div>
+    </div>
+
+    <div class="rubricCard">
+      <h3>📈 Evidence Check</h3>
+      <p>Use this quick rubric to capture what we saw during this investigation.</p>
+      <table class="rubric">
+        <tr><th>Evidence Collected</th><th>1 Emerging</th><th>2 Developing</th><th>3 Independent</th><th>4 Extends</th></tr>
+        <tr><td>Academic Thinking</td><td><input type="radio" name="inv2_academic" value="1"></td><td><input type="radio" name="inv2_academic" value="2"></td><td><input type="radio" name="inv2_academic" value="3"></td><td><input type="radio" name="inv2_academic" value="4"></td></tr>
+        <tr><td>Problem Solving</td><td><input type="radio" name="inv2_problem" value="1"></td><td><input type="radio" name="inv2_problem" value="2"></td><td><input type="radio" name="inv2_problem" value="3"></td><td><input type="radio" name="inv2_problem" value="4"></td></tr>
+        <tr><td>Student Success Skills</td><td><input type="radio" name="inv2_success" value="1"></td><td><input type="radio" name="inv2_success" value="2"></td><td><input type="radio" name="inv2_success" value="3"></td><td><input type="radio" name="inv2_success" value="4"></td></tr>
+        <tr><td>Communication</td><td><input type="radio" name="inv2_comm" value="1"></td><td><input type="radio" name="inv2_comm" value="2"></td><td><input type="radio" name="inv2_comm" value="3"></td><td><input type="radio" name="inv2_comm" value="4"></td></tr>
+        <tr><td>Confidence</td><td><input type="radio" name="inv2_conf" value="1"></td><td><input type="radio" name="inv2_conf" value="2"></td><td><input type="radio" name="inv2_conf" value="3"></td><td><input type="radio" name="inv2_conf" value="4"></td></tr>
+      </table>
+      <div class="rubricGuide">
+        <div><b>1 Emerging:</b> needs significant support</div>
+        <div><b>2 Developing:</b> completes with coaching</div>
+        <div><b>3 Independent:</b> completes independently</div>
+        <div><b>4 Extends:</b> explains, teaches, or applies the skill in a new way</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="inv3" class="investigation">
+    <h2>✏️ Investigation 3: Draw</h2>
+    <div class="develops">
+      <div><h4>Academic Skills</h4><ul><li>Visual models</li><li>Addition and subtraction stories</li><li>Equal groups</li></ul></div>
+      <div><h4>Student Success Skills</h4><ul><li>Making thinking visible</li><li>Organizing information</li><li>Slowing down before solving</li></ul></div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">Draw the Story</b>
+      <p class="activityPrompt">Maya had 14 stickers. She gave 6 to her friend. Draw a picture showing what happened, then figure out how many stickers Maya has left.</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">Try drawing all 14 stickers first, then cross out the ones Maya gave away.</div>
+      <div class="revealBox compareBox">Maya has 8 stickers left. A picture with 14 stickers, 6 crossed out, and 8 remaining shows the whole story — not just the answer.</div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">Draw Equal Groups</b>
+      <p class="activityPrompt">Draw 4 groups with 3 stars in each group. How many stars are there in all?</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">Circling each group of 3 as you draw it can help you keep track of how many groups you've made.</div>
+      <div class="revealBox compareBox">4 groups of 3 stars is 12 stars total. Drawing the groups clearly (circled or spaced apart) makes it easy to count by 3s.</div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">Draw to Compare</b>
+      <p class="activityPrompt">Draw two groups of objects so that one group has exactly 5 more than the other.</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">Start with the smaller group, then figure out exactly how many to add to make it 5 more.</div>
+      <div class="revealBox compareBox">Any pair works as long as the difference is 5 — for example, 4 and 9, or 10 and 15. Lining the two groups up side by side shows the extra 5 clearly.</div>
+    </div>
+
+    <div class="rubricCard">
+      <h3>📈 Evidence Check</h3>
+      <p>Use this quick rubric to capture what we saw during this investigation.</p>
+      <table class="rubric">
+        <tr><th>Evidence Collected</th><th>1 Emerging</th><th>2 Developing</th><th>3 Independent</th><th>4 Extends</th></tr>
+        <tr><td>Academic Thinking</td><td><input type="radio" name="inv3_academic" value="1"></td><td><input type="radio" name="inv3_academic" value="2"></td><td><input type="radio" name="inv3_academic" value="3"></td><td><input type="radio" name="inv3_academic" value="4"></td></tr>
+        <tr><td>Problem Solving</td><td><input type="radio" name="inv3_problem" value="1"></td><td><input type="radio" name="inv3_problem" value="2"></td><td><input type="radio" name="inv3_problem" value="3"></td><td><input type="radio" name="inv3_problem" value="4"></td></tr>
+        <tr><td>Student Success Skills</td><td><input type="radio" name="inv3_success" value="1"></td><td><input type="radio" name="inv3_success" value="2"></td><td><input type="radio" name="inv3_success" value="3"></td><td><input type="radio" name="inv3_success" value="4"></td></tr>
+        <tr><td>Communication</td><td><input type="radio" name="inv3_comm" value="1"></td><td><input type="radio" name="inv3_comm" value="2"></td><td><input type="radio" name="inv3_comm" value="3"></td><td><input type="radio" name="inv3_comm" value="4"></td></tr>
+        <tr><td>Confidence</td><td><input type="radio" name="inv3_conf" value="1"></td><td><input type="radio" name="inv3_conf" value="2"></td><td><input type="radio" name="inv3_conf" value="3"></td><td><input type="radio" name="inv3_conf" value="4"></td></tr>
+      </table>
+      <div class="rubricGuide">
+        <div><b>1 Emerging:</b> needs significant support</div>
+        <div><b>2 Developing:</b> completes with coaching</div>
+        <div><b>3 Independent:</b> completes independently</div>
+        <div><b>4 Extends:</b> explains, teaches, or applies the skill in a new way</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="inv4" class="investigation">
+    <h2>💭 Investigation 4: Reason</h2>
+    <div class="develops">
+      <div><h4>Academic Skills</h4><ul><li>Missing information</li><li>Relevant information</li><li>Early algebra thinking</li></ul></div>
+      <div><h4>Student Success Skills</h4><ul><li>Explaining reasoning</li><li>Noticing what matters</li><li>Working backward</li></ul></div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">What's Missing?</b>
+      <p class="activityPrompt">Jordan bought some notebooks and had $12 left over. How much money did Jordan start with?</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">What would you need to know to answer this — how much the notebooks cost, or how many Jordan bought?</div>
+      <div class="revealBox compareBox">This problem is missing information — we don't know how much the notebooks cost or how many were bought, so it can't be solved yet. Noticing that something is missing is the important skill here.</div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">Too Much Information</b>
+      <p class="activityPrompt">Sam is 11 years old and has brown hair. Sam bought 3 packs of trading cards with 8 cards in each pack. How many trading cards does Sam have?</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">Which details actually help you find the number of cards, and which ones don't matter at all?</div>
+      <div class="revealBox compareBox">Sam's age and hair color don't matter — only "3 packs of 8 cards" matters. 3 × 8 = 24 trading cards. Spotting irrelevant details is just as important as using the relevant ones.</div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">Work Backward</b>
+      <p class="activityPrompt">Sam ends the day with 9 marbles, after giving away 4 marbles earlier. How many marbles did Sam start with?</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">If you undo the "giving away" step, would you add or subtract to work backward?</div>
+      <div class="revealBox compareBox">Sam started with 13 marbles (9 + 4 = 13). Working backward from the ending point is a powerful reasoning strategy, especially when the starting amount is unknown.</div>
+    </div>
+
+    <div class="rubricCard">
+      <h3>📈 Evidence Check</h3>
+      <p>Use this quick rubric to capture what we saw during this investigation.</p>
+      <table class="rubric">
+        <tr><th>Evidence Collected</th><th>1 Emerging</th><th>2 Developing</th><th>3 Independent</th><th>4 Extends</th></tr>
+        <tr><td>Academic Thinking</td><td><input type="radio" name="inv4_academic" value="1"></td><td><input type="radio" name="inv4_academic" value="2"></td><td><input type="radio" name="inv4_academic" value="3"></td><td><input type="radio" name="inv4_academic" value="4"></td></tr>
+        <tr><td>Problem Solving</td><td><input type="radio" name="inv4_problem" value="1"></td><td><input type="radio" name="inv4_problem" value="2"></td><td><input type="radio" name="inv4_problem" value="3"></td><td><input type="radio" name="inv4_problem" value="4"></td></tr>
+        <tr><td>Student Success Skills</td><td><input type="radio" name="inv4_success" value="1"></td><td><input type="radio" name="inv4_success" value="2"></td><td><input type="radio" name="inv4_success" value="3"></td><td><input type="radio" name="inv4_success" value="4"></td></tr>
+        <tr><td>Communication</td><td><input type="radio" name="inv4_comm" value="1"></td><td><input type="radio" name="inv4_comm" value="2"></td><td><input type="radio" name="inv4_comm" value="3"></td><td><input type="radio" name="inv4_comm" value="4"></td></tr>
+        <tr><td>Confidence</td><td><input type="radio" name="inv4_conf" value="1"></td><td><input type="radio" name="inv4_conf" value="2"></td><td><input type="radio" name="inv4_conf" value="3"></td><td><input type="radio" name="inv4_conf" value="4"></td></tr>
+      </table>
+      <div class="rubricGuide">
+        <div><b>1 Emerging:</b> needs significant support</div>
+        <div><b>2 Developing:</b> completes with coaching</div>
+        <div><b>3 Independent:</b> completes independently</div>
+        <div><b>4 Extends:</b> explains, teaches, or applies the skill in a new way</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="inv5" class="investigation">
+    <h2>🔢 Investigation 5: Connect to Math</h2>
+    <div class="develops">
+      <div><h4>Academic Skills</h4><ul><li>Number sentences</li><li>Missing addends</li><li>Equal groups</li><li>Difference/comparison</li></ul></div>
+      <div><h4>Student Success Skills</h4><ul><li>Connecting models to symbols</li><li>Checking if answers make sense</li><li>Explaining strategy</li></ul></div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">Write the Number Sentence</b>
+      <p class="activityPrompt">Remember Maya's 14 stickers from the Draw investigation? Write a number sentence that matches her story.</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">Maya started with 14 and gave some away — which operation matches "giving away"?</div>
+      <div class="revealBox compareBox">14 − 6 = 8. Turning the picture from the Draw investigation into a number sentence shows how a model connects to symbols.</div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">Missing Addend</b>
+      <p class="activityPrompt">7 + ___ = 15. What number goes in the blank? Explain how you figured it out.</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">How far apart are 7 and 15? Counting up from 7 to 15 might help.</div>
+      <div class="revealBox compareBox">The missing number is 8, because 7 + 8 = 15. Counting up from 7 to 15, or subtracting 15 − 7, both get you there — either strategy is valid.</div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">Equal Groups as Multiplication</b>
+      <p class="activityPrompt">4 groups of 3. Write it as repeated addition, then as a multiplication sentence.</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">Repeated addition means adding the same number over and over — how many times would you add 3?</div>
+      <div class="revealBox compareBox">Repeated addition: 3 + 3 + 3 + 3 = 12. Multiplication: 4 × 3 = 12. Both number sentences describe the same 4 equal groups.</div>
+    </div>
+
+    <div class="activityCard">
+      <b class="activityTitle">Comparison Number Sentence</b>
+      <p class="activityPrompt">One tower has 9 blocks, the other has 6 blocks. Write a subtraction sentence that shows the difference.</p>
+      <div class="revealRow">
+        <button class="secondary small" onclick="toggleReveal(this,'clue')">💡 Need a Clue?</button>
+        <button class="secondary small" onclick="toggleReveal(this,'compare')">✅ Let's Compare</button>
+      </div>
+      <div class="revealBox clueBox">"Difference" means how many more one has than the other — which operation shows that?</div>
+      <div class="revealBox compareBox">9 − 6 = 3. This matches the Build investigation, where lining up the towers physically showed the same difference of 3.</div>
+    </div>
+
+    <div class="rubricCard">
+      <h3>📈 Evidence Check</h3>
+      <p>Use this quick rubric to capture what we saw during this investigation.</p>
+      <table class="rubric">
+        <tr><th>Evidence Collected</th><th>1 Emerging</th><th>2 Developing</th><th>3 Independent</th><th>4 Extends</th></tr>
+        <tr><td>Academic Thinking</td><td><input type="radio" name="inv5_academic" value="1"></td><td><input type="radio" name="inv5_academic" value="2"></td><td><input type="radio" name="inv5_academic" value="3"></td><td><input type="radio" name="inv5_academic" value="4"></td></tr>
+        <tr><td>Problem Solving</td><td><input type="radio" name="inv5_problem" value="1"></td><td><input type="radio" name="inv5_problem" value="2"></td><td><input type="radio" name="inv5_problem" value="3"></td><td><input type="radio" name="inv5_problem" value="4"></td></tr>
+        <tr><td>Student Success Skills</td><td><input type="radio" name="inv5_success" value="1"></td><td><input type="radio" name="inv5_success" value="2"></td><td><input type="radio" name="inv5_success" value="3"></td><td><input type="radio" name="inv5_success" value="4"></td></tr>
+        <tr><td>Communication</td><td><input type="radio" name="inv5_comm" value="1"></td><td><input type="radio" name="inv5_comm" value="2"></td><td><input type="radio" name="inv5_comm" value="3"></td><td><input type="radio" name="inv5_comm" value="4"></td></tr>
+        <tr><td>Confidence</td><td><input type="radio" name="inv5_conf" value="1"></td><td><input type="radio" name="inv5_conf" value="2"></td><td><input type="radio" name="inv5_conf" value="3"></td><td><input type="radio" name="inv5_conf" value="4"></td></tr>
+      </table>
+      <div class="rubricGuide">
+        <div><b>1 Emerging:</b> needs significant support</div>
+        <div><b>2 Developing:</b> completes with coaching</div>
+        <div><b>3 Independent:</b> completes independently</div>
+        <div><b>4 Extends:</b> explains, teaches, or applies the skill in a new way</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="debrief" class="card debrief">
+    <span class="kicker">🎯 Mission Debrief</span>
+    <label for="strengthsField">Today's Strengths</label>
+    <textarea id="strengthsField" placeholder="What strengths did we see today?"></textarea>
+
+    <label for="evidenceField">Evidence Collected</label>
+    <textarea id="evidenceField" placeholder="What evidence did we gather across the investigations?"></textarea>
+
+    <label for="nextField">Next Mission</label>
+    <textarea id="nextField" placeholder="What should we focus on next time?"></textarea>
+
+    <label for="familyField">Family Connection</label>
+    <textarea id="familyField" class="family">This week, encourage Cy to explain how he solved a problem rather than simply giving the answer. Celebrating good thinking helps build confidence and independence.</textarea>
+
+    <div class="revealRow" style="margin-top:16px">
+      <button class="good" onclick="generateSummary()">Generate Summary</button>
+      <button class="secondary" onclick="copySummary()">Copy Summary</button>
+    </div>
+    <textarea id="summaryOut" placeholder="Summary appears here after you click Generate Summary..." readonly></textarea>
+  </section>
+
 </main>
-<div id="tutorPanel">
-  <h3>📝 Tutor Quick Notes</h3>
-  <label>Overall session notes</label><textarea id="overallNotes" rows="6" placeholder="Rapport, confidence, strategies, reactions, exact phrases, interests..."></textarea>
-  <label>Quick strengths noticed</label><textarea id="strengthNotes" rows="3"></textarea>
-  <label>Needs support / watch next</label><textarea id="needNotes" rows="3"></textarea>
-  <div class="stars"><span>Reading confidence</span><input id="rateReading" type="range" min="1" max="5" value="3"></div>
-  <div class="stars"><span>Writing confidence</span><input id="rateWriting" type="range" min="1" max="5" value="3"></div>
-  <div class="stars"><span>Math confidence</span><input id="rateMath" type="range" min="1" max="5" value="3"></div>
-  <div class="stars"><span>Overall engagement</span><input id="rateEngage" type="range" min="1" max="5" value="3"></div>
-  <h3>Observations</h3><div class="checklist" id="obsChecks"></div>
-  <h3>Next Session Focus</h3><div class="checklist" id="nextChecks"></div>
-  <button class="good" onclick="generateSummary()">Generate Summary</button> <button class="secondary" onclick="copySummary()">Copy Summary</button> <button class="warn" onclick="downloadJSON()">Export JSON</button>
-  <textarea id="summaryOut" rows="12" placeholder="Summary appears here..."></textarea>
-  <button class="danger" onclick="resetAll()">Reset This Student</button>
-</div>
+<footer>ScholarForge Success System™ — Learning Mission 1: Becoming a Problem Solver</footer>
 <script>
-const STORE='skillQuestQuickV2';
-const obs=['Comfortable talking','Needed encouragement','Asked questions','Self-corrected','Explained thinking','Worked independently','Used fingers','Avoided reading aloud','Good persistence','Frustrated','Curious','Good humor','Creative thinker','Strong listener','Lost focus','Proud moment'];
-const nexts=['Multiplication facts','Division facts','Fractions','Place value','Word problems','Reading fluency','Reading confidence','Vocabulary','Spelling patterns','Sentence writing','Organization','Confidence','Problem solving','Study skills'];
-const gradeData={
- '4':{passage:'Maya found a small wooden box under the old bench at the park. Inside was a map with three red stars and a note that said, “Start where the birds sing.” Maya smiled because she knew exactly where to go first: the big oak tree near the playground.',vocab:['bench','map','note','start','playground'],math:['36 + 27','400 - 185','6 × 7','8 × 4','9 × 5','48 ÷ 6','36 ÷ 4','Which is larger: 1/2 or 1/3?','What number is 10 more than 390?','A box has 6 rows of 8 blocks. How many blocks?']},
- '5':{passage:'Leo designed a robot that could sort recycling in his garage. At first, the robot mixed up cans and bottles, but Leo did not quit. He changed the sensor, tested it again, and wrote down what happened. By Saturday, the robot could sort twenty items in one minute.',vocab:['designed','sensor','tested','recycling','items'],math:['48 + 37','502 - 198','6 × 7','8 × 6','9 × 8','12 × 4','54 ÷ 6','81 ÷ 9','Which is larger: 2/3 or 3/4?','Are 1/2 and 2/4 equivalent?','A game costs $18. You buy 3 games and have $10 left. How much money did you start with?']},
- '6':{passage:'When the power went out at camp, Jordan organized a plan. One group gathered flashlights, another checked on the younger campers, and Jordan made a list of supplies. The storm passed quickly, but the group learned that staying calm and working together made the problem easier to solve.',vocab:['organized','supplies','quickly','calm','solve'],math:['126 + 278','900 - 347','7 × 8','9 × 12','14 × 6','96 ÷ 8','144 ÷ 12','Which is larger: 5/6 or 7/9?','Simplify 6/12','A trail is 3.5 miles long. You walk 1.75 miles. How much is left?','A pack of 4 notebooks costs $7.20. What is the cost per notebook?']}
+const STORE='scholarforgeMission1';
+let state={student:'Cy',timerSeconds:0,timerRunning:false,rubric:{},debrief:{}};
+
+function toggleReveal(btn,type){
+  const row=btn.parentElement;
+  const box=row.parentElement.querySelector(type==='clue'?'.clueBox':'.compareBox');
+  box.classList.toggle('open');
+}
+
+let timerInterval=null;
+function formatTime(s){const m=Math.floor(s/60).toString().padStart(2,'0');const sec=(s%60).toString().padStart(2,'0');return m+':'+sec}
+function updateTimerDisplay(){document.getElementById('timerDisplay').textContent=formatTime(state.timerSeconds)}
+function startTimerInterval(){
+  if(timerInterval) return;
+  timerInterval=setInterval(()=>{state.timerSeconds++;updateTimerDisplay();save()},1000);
+}
+function stopTimerInterval(){clearInterval(timerInterval);timerInterval=null}
+document.getElementById('timerToggle').onclick=()=>{
+  state.timerRunning=!state.timerRunning;
+  const btn=document.getElementById('timerToggle');
+  if(state.timerRunning){startTimerInterval();btn.textContent='Pause Timer'}
+  else{stopTimerInterval();btn.textContent='Start Timer'}
+  save();
 };
-let state={section:0,answers:{},selected:{},done:{},tutor:{obs:{},next:{}}};
-const sectionDefs=[
- {id:'meet',emoji:'🏕️',title:'Meet the Explorer',badge:'Explorer',prompts:['What should I call you?','If you could build anything, what would it be?','What is your favorite game or thing to do?','What are you really good at?','If school could teach one thing you actually wanted to learn, what would it be?']},
- {id:'pack',emoji:'🎒',title:'Explorer Pack',badge:'Interest Scout',choices:['Minecraft','Roblox','Fortnite','Mario','Zelda','Legos','Drawing','Animals','Space','Sports','Science','Building','Music','Reading','Coding','Cooking','Nature','YouTube','Other'],prompts:['Favorite YouTube channel, show, movie, book, or hobby?','What makes learning more fun for you?']},
- {id:'reading',emoji:'📖',title:'Story Challenge',badge:'Story Explorer',dynamic:'reading'},
- {id:'writing',emoji:'✍️',title:'Story Builder',badge:'Story Builder',prompts:['Tell me what is happening in this picture or scene: a kid finds a mysterious backpack near a treehouse.','What happened right before this scene?','What happens next?','Write 3-4 sentences about the scene.','Can you improve one sentence by adding more detail?']},
- {id:'word',emoji:'🔤',title:'Word Detective',badge:'Word Detective',dynamic:'word'},
- {id:'math',emoji:'🔢',title:'Number Challenge',badge:'Number Builder',dynamic:'math'},
- {id:'brain',emoji:'🧩',title:'Brain Builder',badge:'Puzzle Solver',prompts:['Pattern: 3, 6, 12, 24, __. What comes next?','Riddle: I am full of holes but still hold water. What am I?','Logic: If all bloops are blue and this thing is a bloop, what do we know?','Visual thinking: How would you build the tallest tower with only 20 blocks?','Explain one strategy you used today.']},
- {id:'finish',emoji:'🏆',title:'Finish Line',badge:'Quest Complete',prompts:['What was your favorite challenge today?','Which challenge should we do more of next time?','What do you want to get really good at this year?','What would make tutoring more fun?']}
-];
-function gd(){return gradeData[document.getElementById('gradeSelect').value]}
-function el(tag,cls,html){const x=document.createElement(tag); if(cls)x.className=cls; if(html!==undefined)x.innerHTML=html; return x}
-function renderNav(){const nav=document.getElementById('nav'); nav.innerHTML=''; sectionDefs.forEach((s,i)=>{let d=el('div','navitem '+(state.section===i?'active ':'')+(state.done[s.id]?'done':''),`<span>${s.emoji}</span><div><b>${s.title}</b><div class="tiny">${countFor(s)} prompts</div></div>`); d.onclick=()=>showSection(i); nav.appendChild(d)}); const b=document.getElementById('badges'); b.innerHTML=''; sectionDefs.forEach(s=>{b.appendChild(el('div','badge',`<div class="emoji">${state.done[s.id]?'✅':s.emoji}</div><div>${s.badge}</div>`))})}
-function countFor(s){if(s.dynamic==='reading')return 7;if(s.dynamic==='word')return 10;if(s.dynamic==='math')return gd().math.length;return (s.prompts||[]).length+(s.choices?1:0)}
-function answerKey(id,i){return id+'_'+i}
-function renderSections(){const root=document.getElementById('sections'); root.innerHTML=''; sectionDefs.forEach((s,i)=>{const card=el('div','card '+(state.section===i?'':'hide')); card.id='sec_'+i; card.appendChild(el('span','kicker',`${s.emoji} ${s.title} <span class="pill">${countFor(s)} prompts</span>`)); card.appendChild(el('h2',null,s.title)); card.appendChild(el('p','directions',studentDirections(s))); if(s.choices){const grid=el('div','miniGrid'); s.choices.forEach(c=>{const ch=el('div','choice '+(state.selected[c]?'selected':''),c); ch.onclick=()=>{state.selected[c]=!state.selected[c]; save(); renderSections(); renderNav()}; grid.appendChild(ch)}); card.appendChild(grid)}
- let prompts=[]; if(s.dynamic==='reading'){prompts=[`Read this out loud when you are ready:<br><br><div class="prompt passage">${gd().passage}</div>`,'What happened in the story?','Why do you think that happened?','What do you think happens next?','Tell me the story in your own words.','Pick one interesting word and tell what you think it means.','How did that story challenge feel?']} else if(s.dynamic==='word'){prompts=['Choose: friend or freind','Choose: because or becuase','Choose: their, there, or they\'re for: ___ going to the park.','Unscramble: erutnevda','Unscramble: redliub',...gd().vocab.map(v=>'Read and explain this word: '+v)]} else if(s.dynamic==='math'){prompts=gd().math} else {prompts=s.prompts||[]}
- prompts.forEach((p,idx)=>{const box=el('div','prompt'); box.innerHTML=`<b>${idx+1}. ${p}</b>`; const ta=el('textarea','answer'); ta.rows=(s.id==='writing'||s.dynamic==='reading')?2:1; ta.placeholder='Type notes or student response here...'; ta.value=state.answers[answerKey(s.id,idx)]||''; ta.oninput=()=>{state.answers[answerKey(s.id,idx)]=ta.value; save()}; box.appendChild(ta); card.appendChild(box)});
- const foot=el('div','sectionFoot'); foot.innerHTML=`<button class="secondary" onclick="prevSection()">Back</button><div><button class="good" onclick="markDone('${s.id}')">Mark Complete</button> <button onclick="nextSection()">Next</button></div>`; card.appendChild(foot); root.appendChild(card)});}
-function studentDirections(s){const map={meet:'A few easy questions so I can learn what you like.',pack:'Pick anything that fits you. There are no wrong picks.',reading:'We will read a short story and talk about it.',writing:'Let’s build a tiny story together.',word:'Be a word detective. We are just noticing patterns.',math:'Try a few number challenges. Show your thinking however you want.',brain:'These are puzzle-style challenges. Creative answers are welcome.',finish:'Last stop. Help me plan what we do next time.'}; return map[s.id]||''}
-function showSection(i){state.section=Math.max(0,Math.min(sectionDefs.length-1,i)); save(); renderNav(); renderSections(); window.scrollTo({top:0,behavior:'smooth'})}
-function nextSection(){showSection(state.section+1)} function prevSection(){showSection(state.section-1)}
-function markDone(id){state.done[id]=true; save(); renderNav()}
-function openTutor(){document.getElementById('tutorPanel').classList.toggle('open')}
-function buildChecks(){let o=document.getElementById('obsChecks'); o.innerHTML=''; obs.forEach(x=>{let l=el('label'); l.innerHTML=`<input type="checkbox" data-obs="${x}"> ${x}`; o.appendChild(l)}); let n=document.getElementById('nextChecks'); n.innerHTML=''; nexts.forEach(x=>{let l=el('label'); l.innerHTML=`<input type="checkbox" data-next="${x}"> ${x}`; n.appendChild(l)}); document.querySelectorAll('[data-obs]').forEach(cb=>{cb.checked=!!state.tutor.obs[cb.dataset.obs]; cb.onchange=()=>{state.tutor.obs[cb.dataset.obs]=cb.checked;save()}}); document.querySelectorAll('[data-next]').forEach(cb=>{cb.checked=!!state.tutor.next[cb.dataset.next]; cb.onchange=()=>{state.tutor.next[cb.dataset.next]=cb.checked;save()}})}
-function bindTutor(){['overallNotes','strengthNotes','needNotes','rateReading','rateWriting','rateMath','rateEngage'].forEach(id=>{const x=document.getElementById(id); x.value=state.tutor[id]||x.value; x.oninput=()=>{state.tutor[id]=x.value; save()}})}
-function stars(n){return '★'.repeat(+n)+'☆'.repeat(5-(+n))}
-function generateSummary(){const name=document.getElementById('studentName').value||'Student'; const selected=Object.keys(state.selected).filter(k=>state.selected[k]); const ob=Object.keys(state.tutor.obs||{}).filter(k=>state.tutor.obs[k]); const nx=Object.keys(state.tutor.next||{}).filter(k=>state.tutor.next[k]); let lines=[]; lines.push(`${name} - Skill Quest Session 1 Baseline`); lines.push(`Date: ${new Date().toLocaleString()}`); lines.push(`Grade setting: ${document.getElementById('gradeSelect').value}`); lines.push(''); lines.push('Interests / Connection Points'); lines.push(selected.length?selected.join(', '):'No tags selected yet.'); lines.push(''); lines.push('Confidence Snapshot'); lines.push(`Reading: ${stars(document.getElementById('rateReading').value)}`); lines.push(`Writing: ${stars(document.getElementById('rateWriting').value)}`); lines.push(`Math: ${stars(document.getElementById('rateMath').value)}`); lines.push(`Engagement: ${stars(document.getElementById('rateEngage').value)}`); lines.push(''); lines.push('Observed Behaviors'); lines.push(ob.length?ob.join(', '):'No observations checked yet.'); lines.push(''); lines.push('Strengths Noticed'); lines.push(document.getElementById('strengthNotes').value||''); lines.push(''); lines.push('Needs Support / Watch Next'); lines.push(document.getElementById('needNotes').value||''); lines.push(''); lines.push('Recommended Session 2 Focus'); lines.push(nx.length?nx.join(', '):''); lines.push(''); lines.push('Overall Notes'); lines.push(document.getElementById('overallNotes').value||''); lines.push(''); lines.push('Student Responses'); sectionDefs.forEach(s=>{lines.push(`\n${s.title}`); for(let i=0;i<20;i++){let v=state.answers[answerKey(s.id,i)]; if(v) lines.push(`- ${v}`)}}); document.getElementById('summaryOut').value=lines.join('\n'); save();}
-function copySummary(){generateSummary(); navigator.clipboard.writeText(document.getElementById('summaryOut').value).catch(()=>{});}
-function downloadJSON(){save(); const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=(document.getElementById('studentName').value||'student')+'_skill_quest_baseline.json'; a.click();}
-function save(){state.studentName=document.getElementById('studentName')?.value||'Cy'; state.grade=document.getElementById('gradeSelect')?.value||'5'; localStorage.setItem(STORE,JSON.stringify(state));}
-function load(){try{const raw=localStorage.getItem(STORE); if(raw) state=Object.assign(state,JSON.parse(raw));}catch(e){} document.getElementById('studentName').value=state.studentName||'Cy'; document.getElementById('gradeSelect').value=state.grade||'5';}
-function resetAll(){if(confirm('Clear saved data for this tool?')){localStorage.removeItem(STORE); location.reload();}}
-document.addEventListener('keydown',e=>{if(e.key.toLowerCase()==='t' && !['TEXTAREA','INPUT'].includes(document.activeElement.tagName)) openTutor()});
-document.getElementById('saveBtn').onclick=save; document.getElementById('studentName').oninput=save; document.getElementById('gradeSelect').onchange=()=>{save(); renderNav(); renderSections()};
-load(); buildChecks(); bindTutor(); renderNav(); renderSections(); showSection(state.section||0); setInterval(save,3000);
+document.getElementById('timerReset').onclick=()=>{
+  state.timerSeconds=0;updateTimerDisplay();save();
+};
+document.getElementById('printBtn').onclick=()=>{window.print()};
+
+function stars(n){return n?('★'.repeat(+n)+'☆'.repeat(4-(+n))):'Not rated'}
+const rubricRows=[['academic','Academic Thinking'],['problem','Problem Solving'],['success','Student Success Skills'],['comm','Communication'],['conf','Confidence']];
+const investigations=[['inv1','Investigation 1: Notice'],['inv2','Investigation 2: Build'],['inv3','Investigation 3: Draw'],['inv4','Investigation 4: Reason'],['inv5','Investigation 5: Connect to Math']];
+
+function generateSummary(){
+  const name=document.getElementById('studentName').value||'Student';
+  let lines=[];
+  lines.push('ScholarForge Success System™');
+  lines.push('Learning Mission 1: Becoming a Problem Solver — Mission Debrief');
+  lines.push(`Student: ${name}`);
+  lines.push(`Date: ${new Date().toLocaleDateString()}`);
+  lines.push(`Session time: ${formatTime(state.timerSeconds)}`);
+  lines.push('');
+  lines.push("Today's Strengths");
+  lines.push(document.getElementById('strengthsField').value||'—');
+  lines.push('');
+  lines.push('Evidence Collected');
+  lines.push(document.getElementById('evidenceField').value||'—');
+  lines.push('');
+  lines.push('Rubric Snapshot');
+  investigations.forEach(([id,label])=>{
+    let parts=[];
+    rubricRows.forEach(([key,rowLabel])=>{
+      const checked=document.querySelector(`input[name="${id}_${key}"]:checked`);
+      if(checked) parts.push(`${rowLabel}: ${checked.value}`);
+    });
+    if(parts.length) lines.push(`${label} — ${parts.join(', ')}`);
+  });
+  lines.push('');
+  lines.push('Next Mission');
+  lines.push(document.getElementById('nextField').value||'—');
+  lines.push('');
+  lines.push('Family Connection');
+  lines.push(document.getElementById('familyField').value||'—');
+  document.getElementById('summaryOut').value=lines.join('\n');
+  save();
+}
+function copySummary(){
+  generateSummary();
+  navigator.clipboard.writeText(document.getElementById('summaryOut').value).catch(()=>{});
+}
+
+function save(){
+  state.student=document.getElementById('studentName').value;
+  state.debrief={
+    strengths:document.getElementById('strengthsField').value,
+    evidence:document.getElementById('evidenceField').value,
+    next:document.getElementById('nextField').value,
+    family:document.getElementById('familyField').value
+  };
+  document.querySelectorAll('table.rubric input[type="radio"]:checked').forEach(r=>{state.rubric[r.name]=r.value});
+  localStorage.setItem(STORE,JSON.stringify(state));
+}
+function load(){
+  try{
+    const raw=localStorage.getItem(STORE);
+    if(raw) state=Object.assign(state,JSON.parse(raw));
+  }catch(e){}
+  document.getElementById('studentName').value=state.student||'Cy';
+  updateTimerDisplay();
+  if(state.debrief){
+    document.getElementById('strengthsField').value=state.debrief.strengths||'';
+    document.getElementById('evidenceField').value=state.debrief.evidence||'';
+    document.getElementById('nextField').value=state.debrief.next||'';
+    if(state.debrief.family) document.getElementById('familyField').value=state.debrief.family;
+  }
+  if(state.rubric){
+    Object.keys(state.rubric).forEach(name=>{
+      const input=document.querySelector(`input[name="${name}"][value="${state.rubric[name]}"]`);
+      if(input) input.checked=true;
+    });
+  }
+}
+document.getElementById('studentName').oninput=save;
+['strengthsField','evidenceField','nextField','familyField'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',save);
+});
+document.querySelectorAll('table.rubric input[type="radio"]').forEach(r=>r.addEventListener('change',save));
+
+load();
 </script>
 </body>
 </html>
