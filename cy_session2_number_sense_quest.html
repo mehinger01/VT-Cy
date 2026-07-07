@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cy Session 2: Number Sense Quest</title>
+<style>
+:root{
+  --sky:#7dd3fc; --grass:#58b947; --grass2:#3d8f34; --dirt:#7a4a25; --dirt2:#4b2c18;
+  --stone:#1f2933; --stone2:#101820; --panel:#18222d; --panel2:#0f1720; --line:#3b4b5d;
+  --text:#f8fafc; --muted:#b8c4d1; --xp:#7cff3a; --gold:#ffd43b; --red:#ff595e; --blue:#38bdf8; --purple:#a855f7;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:"Trebuchet MS",Arial,sans-serif;background:linear-gradient(#79cfff 0 160px,#4ea849 160px 205px,#6b3f20 205px 100%);color:var(--text)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:
+  linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px),
+  linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:24px 24px;mix-blend-mode:overlay;opacity:.45}
+.pixel{image-rendering:pixelated}.wrap{max-width:1280px;margin:0 auto;padding:18px}.top{display:grid;grid-template-columns:285px 1fr 205px;gap:14px;align-items:stretch;margin-bottom:14px}.box{background:linear-gradient(180deg,var(--panel),var(--panel2));border:4px solid #0a0f14;box-shadow:0 0 0 2px var(--line) inset, 6px 6px 0 rgba(0,0,0,.35);border-radius:3px}.player{display:grid;grid-template-columns:84px 1fr;gap:12px;padding:12px}.avatar{width:78px;height:78px;background:#2dd4bf;border:4px solid #071016;position:relative;box-shadow:inset 0 0 0 5px rgba(255,255,255,.15)}
+.avatar:before{content:"";position:absolute;left:20px;top:12px;width:38px;height:48px;background:#b77944;box-shadow:0 8px 0 #8b572f, -8px 14px 0 #6b3f22, 8px 14px 0 #6b3f22}
+.avatar:after{content:"";position:absolute;left:22px;top:30px;width:7px;height:7px;background:white;box-shadow:22px 0 0 white, 4px 0 0 #2563eb,26px 0 0 #2563eb,12px 18px 0 #3b2314}
+.hud h1{font-size:42px;line-height:.95;margin:10px 0 3px;text-align:center;text-transform:uppercase;text-shadow:4px 4px 0 #000, -2px 2px 0 #000;letter-spacing:1px}.hud .sub{font-size:25px;text-align:center;color:var(--gold);font-weight:900;text-shadow:3px 3px 0 #000}.tagline{text-align:center;background:#111827cc;margin:10px auto 0;display:table;padding:8px 16px;border:3px solid #38495d;text-transform:uppercase;font-weight:900;letter-spacing:1px}.stat{padding:12px}.bar{height:22px;background:#070b10;border:3px solid #34465a;margin-top:8px}.fill{height:100%;background:linear-gradient(90deg,#54d13f,#a3ff5f);width:62%}.currency{padding:14px;font-weight:900}.currency div{display:flex;justify-content:space-between;margin:8px 0}.gem{color:#67e8f9}.coin{color:var(--gold)}
+.game{display:grid;grid-template-columns:315px 1fr 285px;gap:16px}.mission{padding:12px}.mission h2,.side h2,.main h2{margin:0 0 12px;text-transform:uppercase;text-shadow:3px 3px 0 #000}.stage{display:grid;grid-template-columns:48px 1fr 38px;gap:10px;align-items:center;padding:10px;border-top:2px solid #334155;background:#111b25;cursor:pointer}.stage:hover{background:#17283a}.stage.active{outline:3px solid var(--xp);background:#18331f}.num{width:42px;height:42px;background:#22c55e;border:4px solid #09200e;display:grid;place-items:center;font-size:24px;font-weight:900;box-shadow:inset 0 0 0 3px rgba(255,255,255,.18)}.stage:nth-child(4) .num{background:#06b6d4}.stage:nth-child(5) .num{background:#8b5cf6}.stage:nth-child(6) .num{background:#f97316}.stage:nth-child(7) .num{background:#eab308}.stage b{display:block;text-transform:uppercase}.stage small{color:var(--muted)}.icon{font-size:28px}.goals{margin-top:12px;padding:12px;background:#101923;border:3px solid #2d3d4f}.goals label{display:block;margin:8px 0}.goals input{accent-color:#84cc16}.npc{display:flex;gap:10px;align-items:end;margin-top:16px}.hero{font-size:56px;filter:drop-shadow(4px 4px 0 #000)}.bubble{background:#fff7e6;color:#111827;border:4px solid #1b1712;padding:10px;font-weight:900;max-width:190px;box-shadow:5px 5px 0 rgba(0,0,0,.4)}
+.main{min-height:720px}.screen{display:none;padding:14px}.screen.active{display:block}.challengeHead{display:flex;justify-content:space-between;gap:12px;align-items:center;background:#111827;border:4px solid #0a0f14;padding:10px;margin-bottom:12px}.challengeHead .flag{color:#7cff3a;font-size:22px;font-weight:900}.timer{font-size:28px;font-weight:900;color:white;text-shadow:3px 3px #000}.btn{border:4px solid #071016;background:#1d4ed8;color:white;font-weight:900;text-transform:uppercase;padding:10px 14px;box-shadow:4px 4px 0 rgba(0,0,0,.4);cursor:pointer}.btn:hover{transform:translate(1px,1px);box-shadow:3px 3px 0 rgba(0,0,0,.4)}.btn.green{background:#16a34a}.btn.red{background:#dc2626}.btn.gray{background:#475569}.btn.gold{background:#ca8a04}.problem{background:#101923;border:4px solid #0a0f14;margin:12px 0;padding:12px;box-shadow:inset 0 0 0 2px #34465a}.problemHead{display:flex;justify-content:space-between;gap:10px;align-items:center}.q{font-size:21px;font-weight:900}.badge{display:inline-block;background:#172554;border:2px solid #60a5fa;color:#bfdbfe;padding:3px 8px;margin:4px 4px 4px 0;font-size:12px;text-transform:uppercase}.answer{display:none;background:#062815;border:3px solid #16a34a;margin-top:10px;padding:10px;color:#bbf7d0;font-weight:900}.problem.reveal .answer{display:block}.score{margin-top:10px;color:var(--muted)}.score button{width:34px;height:34px;border:3px solid #0a0f14;background:#334155;color:white;font-weight:900;margin-left:3px}.score button.on{background:#84cc16;color:#071016}.triples{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}.card{background:#e9dcc7;color:#101820;border:4px solid #0a0f14;min-height:125px;padding:10px;font-weight:900}.card h3{margin:0 0 8px;text-transform:uppercase}.blocks{font-size:28px;letter-spacing:3px;line-height:1.35}.lines div{height:28px;border-bottom:3px solid #333;margin:8px 0}.inv{display:grid;grid-template-columns:repeat(9,1fr);gap:5px;margin-top:15px}.slot{height:42px;background:#141b23;border:4px solid #0a0f14;display:grid;place-items:center;font-size:24px}.slot.active{outline:3px solid var(--gold)}
+.side{display:grid;gap:14px;align-content:start}.side .box{padding:12px}.tool{display:grid;grid-template-columns:42px 1fr;gap:9px;align-items:center;margin:10px 0}.tool .pic{font-size:30px}.meter{display:grid;grid-template-columns:1fr;gap:8px}.meterLine{display:grid;grid-template-columns:1fr 105px;gap:8px;align-items:center}.pips{display:grid;grid-template-columns:repeat(8,1fr);gap:3px}.pip{height:16px;background:#233142;border:2px solid #4b5563}.pip.on{background:#7cff3a}.xp li{display:flex;justify-content:space-between;margin:8px 0}.parent{background:#0c1720;border-color:#0a0f14}.parent p{line-height:1.45;color:#e5e7eb}.hotbar{position:sticky;bottom:0;background:#0b1118;border-top:5px solid #000;margin-top:14px;padding:9px;display:grid;grid-template-columns:190px 1fr 160px 170px;gap:10px;align-items:center;box-shadow:0 -6px 0 rgba(0,0,0,.25)}.hearts{color:#ff4757;text-shadow:2px 2px #000;font-size:22px;letter-spacing:2px}.timerControls{display:flex;gap:8px;align-items:center;justify-content:center}.printOnly{display:none}.noteArea{width:100%;min-height:220px;background:#071016;color:#f8fafc;border:3px solid #334155;padding:12px;font:15px Arial}.matrix{width:100%;border-collapse:collapse}.matrix td,.matrix th{border:3px solid #0a0f14;background:#111b25;padding:8px}.matrix th{background:#253346}.matrix input{transform:scale(1.2);accent-color:#84cc16}.matrix td[contenteditable]{background:#0a1119;color:white;min-width:150px}
+@media(max-width:980px){.top,.game{grid-template-columns:1fr}.hotbar{grid-template-columns:1fr}.hud h1{font-size:34px}.triples{grid-template-columns:1fr}.side{grid-template-columns:1fr}.mission{order:2}}
+@media print{body{background:white;color:black}.top,.mission,.side,.hotbar,.noPrint{display:none}.wrap{max-width:none}.game{display:block}.box,.problem{box-shadow:none;border:2px solid #333;background:white;color:black}.screen{display:block}.screen:not(.active){page-break-before:always}.answer{display:block;background:white;color:black;border:1px solid #333}.printOnly{display:block}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="box player">
+      <div class="avatar pixel"></div>
+      <div><b>PLAYER: CY</b><br><br><b style="color:var(--xp)">LEVEL: 2</b><div class="bar"><div class="fill" id="xpFill"></div></div><small id="xpText">XP 120/200</small></div>
+    </div>
+    <div class="hud"><h1>Number Sense Quest</h1><div class="sub">SESSION 2</div><div class="tagline">Build it. Draw it. Write it. Own it.</div></div>
+    <div class="box currency"><div><span class="gem">◆ GEMS</span><span id="gems">24</span></div><div><span class="coin">● COINS</span><span id="coins">130</span></div></div>
+  </div>
+
+  <div class="game">
+    <aside class="box mission noPrint">
+      <h2>⚔ Mission Plan</h2>
+      <div class="stage active" data-show="run"><div class="num">1</div><div><b>Run of Show</b><small>60 minute adventure</small></div><div class="icon">🗺️</div></div>
+      <div class="stage" data-show="warmup"><div class="num">2</div><div><b>Finish Session 1</b><small>Review + explain thinking</small></div><div class="icon">🌱</div></div>
+      <div class="stage" data-show="bdw"><div class="num">3</div><div><b>Build → Draw → Write</b><small>Concrete to abstract</small></div><div class="icon">🧱</div></div>
+      <div class="stage" data-show="rules"><div class="num">4</div><div><b>Find My Rule</b><small>Pattern detective work</small></div><div class="icon">⛏️</div></div>
+      <div class="stage" data-show="stretch"><div class="num">5</div><div><b>Stretch Challenge</b><small>Predict + reason</small></div><div class="icon">🔥</div></div>
+      <div class="stage" data-show="mastery"><div class="num">6</div><div><b>Mastery Tracker</b><small>Decide next lesson</small></div><div class="icon">⭐</div></div>
+      <div class="stage" data-show="notes"><div class="num">7</div><div><b>Parent Notes</b><small>Ready-to-edit summary</small></div><div class="icon">📜</div></div>
+      <div class="goals"><b>Today's Quest Goals</b>
+        <label><input type="checkbox"> See patterns and understand rules</label>
+        <label><input type="checkbox"> Connect blocks, drawings, and numbers</label>
+        <label><input type="checkbox"> Predict without building every step</label>
+        <label><input type="checkbox"> Explain thinking clearly</label>
+        <label><input type="checkbox"> End with confidence</label>
+      </div>
+      <div class="npc"><div class="hero">🧑‍🚀</div><div class="bubble">Every problem solved gives XP and unlocks new skills!</div></div>
+    </aside>
+
+    <main class="box main">
+      <section id="run" class="screen active">
+        <div class="challengeHead"><div class="flag">⚑ Mission Brief</div><div class="timer" id="timer">00:00</div></div>
+        <h2>Session Goal</h2>
+        <p>Help Cy strengthen the bridge between <b>physical quantities</b> and <b>abstract number representations</b>, using blocks first and then gradually reducing support.</p>
+        <div class="problem"><div class="q">Core Move</div><p><b>Build it → describe it → draw it → write it with numbers → predict the next step without building.</b></p></div>
+        <h2>60-Minute Flow</h2>
+        <div class="problem"><b>0–8:</b> Reset + quick win<br><b>8–20:</b> Finish Session 1 work<br><b>20–38:</b> Build → Draw → Write<br><b>38–50:</b> Find My Rule<br><b>50–57:</b> Stretch challenge<br><b>57–60:</b> Success close</div>
+        <h2>Opening Script</h2>
+        <div class="problem"><p>“Today is a quest. The goal is not just getting answers. The goal is learning how the same idea can show up as blocks, a picture, numbers, and a rule.”</p></div>
+      </section>
+
+      <section id="warmup" class="screen"><div class="challengeHead"><div class="flag">🌱 Finish Session 1</div><button class="btn green" onclick="award(10)">+10 XP</button></div><p>Use these to complete prior work and assess whether he can explain the relationship between blocks and numbers.</p><div id="warmupProblems"></div></section>
+      <section id="bdw" class="screen"><div class="challengeHead"><div class="flag">🧱 Build → Draw → Write</div><button class="btn green" onclick="award(20)">+20 XP</button></div><p>For each item: build the first 3 steps, draw them quickly, write the number sequence, then predict the next number.</p><div class="triples"><div class="card"><h3>1 Build It</h3><div class="blocks">🟩<br>🟩🟩🟩<br>🟩🟩🟩🟩🟩</div></div><div class="card"><h3>2 Draw It</h3><div class="blocks">□<br>□□□<br>□□□□□</div></div><div class="card lines"><h3>3 Write It</h3><div></div><div></div><div></div><div></div></div></div><div id="bdwProblems"></div></section>
+      <section id="rules" class="screen"><div class="challengeHead"><div class="flag">⛏️ Find My Rule</div><button class="btn green" onclick="award(20)">+20 XP</button></div><p>Ask Cy to say the rule in words before answering. Then have him create one for you.</p><div id="ruleProblems"></div></section>
+      <section id="stretch" class="screen"><div class="challengeHead"><div class="flag">🔥 Stretch Challenge</div><button class="btn gold" onclick="award(30)">+30 XP</button></div><p>Use these after several wins. The goal is reasoning, not speed.</p><div id="stretchProblems"></div></section>
+      <section id="mastery" class="screen"><div class="challengeHead"><div class="flag">⭐ Mastery Tracker</div><button class="btn gray" onclick="window.print()">Print / PDF</button></div><p>Rate each area 0–3. This tells you whether to go deeper next time or move toward multiplication/fractions preview.</p><table class="matrix"><thead><tr><th>Skill</th><th>0</th><th>1</th><th>2</th><th>3</th><th>Notes</th></tr></thead><tbody id="masteryRows"></tbody></table><div class="problem"><b>Move on when:</b> most skills are 2 or 3. <b>Stay here when:</b> he needs blocks for every item or cannot explain the rule verbally.</div></section>
+      <section id="notes" class="screen"><div class="challengeHead"><div class="flag">📜 Parent Notes Builder</div><button class="btn gray" onclick="copyNotes()">Copy Notes</button></div><textarea id="parentNotes" class="noteArea">Today we continued strengthening Cy's number sense by helping him connect hands-on mathematical models to numerical patterns and abstract representations. We began by using blocks to recognize, build, and regroup patterns, then moved those same ideas into drawings and number sequences. This helped Cy practice seeing numbers as representations of quantities and relationships, not just symbols on a page.
+
+A major focus was having Cy explain the rule behind a pattern before solving it. This is important because middle school math increasingly requires students to reason, describe relationships, and predict what comes next. We also worked on gradually reducing the need for manipulatives by asking Cy to picture the blocks mentally and then check his thinking.
+
+This concrete-to-abstract bridge remains an important area of focus, but today's work supported the exact kind of number sense and flexible thinking he will need as he prepares for the next grade level.</textarea><p id="copyMsg"></p></section>
+      <div class="hotbar noPrint"><button class="btn" onclick="startTimer()">▶ Start Timer</button><div class="timerControls"><button class="btn gray" onclick="pauseTimer()">Pause</button><button class="btn red" onclick="resetTimer()">Reset</button><span class="hearts">♥♥♥♥♥♥♥♥</span></div><button class="btn gray" onclick="window.print()">🖨 Print / PDF</button><button class="btn green" onclick="saveProgress()">💾 Save Progress</button></div>
+    </main>
+
+    <aside class="side noPrint">
+      <div class="box"><h2>Tools</h2><div class="tool"><div class="pic">🟩</div><div><b>Blocks</b><br><small>For building</small></div></div><div class="tool"><div class="pic">📄</div><div><b>Paper</b><br><small>For drawing</small></div></div><div class="tool"><div class="pic">✏️</div><div><b>Marker</b><br><small>For numbers</small></div></div><div class="tool"><div class="pic">🧠</div><div><b>Mind Power</b><br><small>For thinking</small></div></div></div>
+      <div class="box"><h2>Mastery Meter</h2><div class="meter" id="meters"></div></div>
+      <div class="box"><h2>XP Rewards</h2><ul class="xp"><li>Complete challenge <b>+10 XP</b></li><li>Explain thinking <b>+20 XP</b></li><li>Stretch challenge <b>+30 XP</b></li><li>Success close <b>+10 XP</b></li></ul></div>
+      <div class="box parent"><h2>Parent Note</h2><p>We are building the bridge between concrete models, visual representations, and abstract numbers. This is key to confidence and success in middle school math.</p><p style="color:var(--xp);font-weight:900">You've got this, Cy! 💚</p></div>
+    </aside>
+  </div>
+</div>
+<script>
+const warmups=[
+ ['Build 4 blocks. Add 2. How many now? Write the number sentence.','4 + 2 = 6','addition, concrete'],
+ ['Build 7 blocks. Take away 3. How many remain?','7 - 3 = 4','subtraction, concrete'],
+ ['Build a row of 3, then a row of 4, then a row of 5. What comes next?','6','growing pattern'],
+ ['Show 8 as two groups in as many ways as you can.','0+8, 1+7, 2+6, 3+5, 4+4','decomposition'],
+ ['Make 10 using two colors. What combinations can you find?','0+10 through 10+0','make ten'],
+ ['Build 6. Can you show the same amount a different way?','Examples: 3+3, 2+2+2, 5+1','flexible representation'],
+ ['Which is more: 9 blocks or 12 blocks? How do you know without counting all?','12; compare quantity/magnitude','magnitude'],
+ ['Build 5, 10, 15. What is changing each time?','Adding 5 each step','skip counting']
+];
+const bdw=[
+ ['Steps: 2, 4, 6. Build, draw, write, then predict step 4.','8','add 2'],
+ ['Steps: 3, 6, 9. Build, draw, write, then predict step 4.','12','add 3'],
+ ['Steps: 5, 10, 15. Build, draw, write, then predict step 4.','20','add 5'],
+ ['Steps: 10, 8, 6. Build/draw/write. What comes next?','4','subtract 2'],
+ ['Steps: 1, 3, 5, 7. Build/draw/write. What comes next?','9','odd numbers/add 2'],
+ ['Steps: 4, 7, 10. Build/draw/write. What comes next?','13','add 3'],
+ ['Steps: 12, 10, 8. Build/draw/write. What comes next?','6','subtract 2'],
+ ['Steps: 6, 12, 18. Build/draw/write. What comes next?','24','add 6'],
+ ['Steps: 2, 5, 8. Build/draw/write. What comes next?','11','add 3'],
+ ['Steps: 20, 15, 10. Build/draw/write. What comes next?','5','subtract 5']
+];
+const rules=[
+ ['3, 6, 9, 12, __','15','add 3'],['10, 9, 8, 7, __','6','subtract 1'],['5, 10, 15, 20, __','25','add 5'],['2, 5, 8, 11, __','14','add 3'],['1, 2, 4, 8, __','16','double'],['20, 18, 16, 14, __','12','subtract 2'],['4, 8, 12, 16, __','20','add 4'],['7, 14, 21, 28, __','35','add 7'],['30, 25, 20, 15, __','10','subtract 5'],['6, 7, 9, 12, __','16','add 1, then 2, then 3, then 4'],['1, 4, 7, 10, __','13','add 3'],['11, 22, 33, 44, __','55','add 11']
+];
+const stretch=[
+ ['Start with 4 blocks. Add 3 each step. What is Step 5?','16','Steps: 4, 7, 10, 13, 16'],
+ ['A pattern starts 2, 6, 10. What is Step 6?','22','add 4: 2, 6, 10, 14, 18, 22'],
+ ['You have 3 rows of 5 blocks. How many blocks? Can you show it two ways?','15','5+5+5 or 3×5'],
+ ['If Step 1 has 5 blocks and each step adds 2, which step has 13 blocks?','Step 5','5, 7, 9, 11, 13'],
+ ['Build 12 blocks as equal groups. What groupings work?','1×12, 2×6, 3×4, 4×3, 6×2, 12×1','factor thinking'],
+ ['A pattern goes 9, 12, 15, 18. What was the number before 9?','6','subtract 3 backwards'],
+ ['I have 18 blocks. I make groups of 3. How many groups?','6','division as grouping'],
+ ['I have 24 blocks. Is it closer to 20 or 30? Explain.','20','4 away from 20, 6 away from 30'],
+ ['Without building all of it: 6, 12, 18, 24, __, __','30, 36','add 6 / skip count'],
+ ['Create your own pattern with a secret rule. Tutor must solve it.','Varies','student-generated reasoning']
+];
+const skills=['Pattern Recognition','Connecting Representations','Rule Discovery','Reasoning & Prediction','Explanation & Thinking'];
+function render(arr,id){document.getElementById(id).innerHTML=arr.map((p,i)=>`<div class="problem"><div class="problemHead"><div class="q">${i+1}. ${p[0]}</div><button class="btn gray" onclick="this.closest('.problem').classList.toggle('reveal')">Answer</button></div><span class="badge">${p[2]}</span><div class="answer">Answer: ${p[1]}</div><div class="score">Competency: <button onclick="mark(this)">0</button><button onclick="mark(this)">1</button><button onclick="mark(this)">2</button><button onclick="mark(this)">3</button></div></div>`).join('')}
+function mark(btn){[...btn.parentElement.querySelectorAll('button')].forEach(b=>b.classList.remove('on'));btn.classList.add('on');award(Number(btn.textContent)*2)}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.stage').forEach(s=>s.classList.toggle('active',s.dataset.show===id))}
+document.querySelectorAll('.stage').forEach(s=>s.addEventListener('click',()=>show(s.dataset.show)));
+render(warmups,'warmupProblems');render(bdw,'bdwProblems');render(rules,'ruleProblems');render(stretch,'stretchProblems');
+document.getElementById('masteryRows').innerHTML=['Recognizes visual/block patterns','Translates blocks into numbers','Explains the rule verbally','Predicts next step without building every block','Decomposes numbers flexibly','Uses drawing as a bridge','Handles mistakes/reset productively','Can create his own pattern'].map((s,i)=>`<tr><td>${s}</td><td><input type="radio" name="m${i}"></td><td><input type="radio" name="m${i}"></td><td><input type="radio" name="m${i}"></td><td><input type="radio" name="m${i}"></td><td contenteditable="true"></td></tr>`).join('');
+document.getElementById('meters').innerHTML=skills.map((s,i)=>`<div class="meterLine"><b>${s}</b><div class="pips">${Array.from({length:8}).map((_,j)=>`<div class="pip ${j<Math.max(2,6-i)?'on':''}"></div>`).join('')}</div></div>`).join('');
+let t=0, interval=null, xp=120, gems=24, coins=130;function fmt(n){return String(n).padStart(2,'0')}function updateTimer(){document.getElementById('timer').textContent=`${fmt(Math.floor(t/60))}:${fmt(t%60)}`}function startTimer(){if(!interval)interval=setInterval(()=>{t++;updateTimer()},1000)}function pauseTimer(){clearInterval(interval);interval=null}function resetTimer(){pauseTimer();t=0;updateTimer()}
+function award(n){xp+=n;coins+=Math.max(1,Math.floor(n/2));if(xp>=200){gems++;xp=xp-200}document.getElementById('xpFill').style.width=Math.min(100,xp/200*100)+'%';document.getElementById('xpText').textContent=`XP ${xp}/200`;document.getElementById('gems').textContent=gems;document.getElementById('coins').textContent=coins;localStorage.setItem('cyQuestProgress',JSON.stringify({xp,gems,coins,t}))}
+function saveProgress(){localStorage.setItem('cyQuestProgress',JSON.stringify({xp,gems,coins,t,notes:document.getElementById('parentNotes').value}));alert('Progress saved on this device.')}function copyNotes(){navigator.clipboard.writeText(document.getElementById('parentNotes').value);document.getElementById('copyMsg').textContent='Copied parent notes.'}
+try{const saved=JSON.parse(localStorage.getItem('cyQuestProgress')||'{}');if(saved.xp){xp=saved.xp;gems=saved.gems;coins=saved.coins;t=saved.t||0;if(saved.notes)document.getElementById('parentNotes').value=saved.notes;award(0);updateTimer()}}catch(e){}
+</script>
+</body>
+</html>
