@@ -1,31 +1,416 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Cy's Percent & Pattern Mission</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Cy's Percent Vault Mission</title>
 <style>
-:root{--sky:#79c9ff;--grass:#4fb344;--dirt:#8b5a2b;--stone:#394553;--ink:#20170d;--gold:#ffd35a;--cream:#fff9d8;--green:#6bff8d;--blue:#bfe0ff;--red:#ff8f7d}*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Trebuchet MS,system-ui,sans-serif;color:var(--cream);background:linear-gradient(#79c9ff,#c8f2ff 38%,#55b64d 38%,#3f8f37);padding-bottom:94px}button,input,textarea{font:inherit}.wrap{max-width:760px;margin:auto;padding:12px}.block{border:5px solid var(--ink);box-shadow:0 7px 0 var(--ink);background:var(--stone);padding:16px;margin-bottom:16px}.hero{background:linear-gradient(to bottom,var(--grass) 0 24px,var(--dirt) 24px)}h1,h2,h3{color:#fff3a8;text-shadow:2px 2px #000}.hero h1{font-size:clamp(1.9rem,8vw,3.2rem);line-height:1;margin:8px 0 10px;text-transform:uppercase}.hud{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.hud div{border:3px solid var(--ink);background:#1e2530;padding:9px;text-align:center}.hud strong{display:block;color:var(--gold);font-size:.72rem;text-transform:uppercase}.progress{height:26px;border:4px solid var(--ink);background:#111820;overflow:hidden;margin:12px 0}.fill{height:100%;background:linear-gradient(90deg,#34d65f,#9eff7d);width:0}.agenda{display:grid;gap:8px}.agenda div,.task{border:3px solid var(--ink);background:rgba(0,0,0,.25);padding:11px}.agenda strong{color:var(--gold)}.answer{width:100%;min-height:50px;border:4px solid var(--ink);background:#fff;color:#111;padding:10px;margin-top:8px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:8px}.choice{min-height:50px;border:4px solid var(--ink);background:var(--blue);font-weight:900}.choice.selected{background:var(--green)}.tip{border-left:7px solid var(--gold);background:#fff4b8;color:#2b1c0c;padding:11px;line-height:1.45}.craft{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0}.ore{border:4px solid var(--ink);background:#fff;color:#111;padding:12px 4px;text-align:center;font-weight:900}.ore.on{background:var(--green)}.nav{position:fixed;left:0;right:0;bottom:0;background:#202733;border-top:5px solid var(--ink);padding:10px calc(10px + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left));z-index:20}.navin{max-width:760px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{min-height:52px;border:4px solid var(--ink);box-shadow:0 4px var(--ink);background:var(--gold);color:var(--ink);font-weight:900;text-transform:uppercase}.btn.secondary{background:var(--blue)}.launch{display:block;text-align:center;text-decoration:none;margin:12px 0;border:4px solid var(--ink);box-shadow:0 4px var(--ink);background:var(--gold);color:var(--ink);padding:13px;font-weight:900;text-transform:uppercase}.hidden{display:none}.score{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.score button{border:3px solid var(--ink);padding:10px;font-weight:900}.score button.selected{background:var(--green)}.small{font-size:.82rem;color:#d5e3f0}.table{width:100%;border-collapse:collapse;background:#fff;color:#111}.table th,.table td{border:3px solid var(--ink);padding:9px;text-align:center}.breakbox{text-align:center;font-size:1.1rem}.danger{background:var(--red)!important}@media(max-width:520px){.wrap{padding:8px}.block{padding:13px}.hud{grid-template-columns:1fr}.choices{grid-template-columns:1fr}.hero h1{font-size:2rem}.craft{grid-template-columns:repeat(2,1fr)}}
+:root{
+  --sky:#79c9ff;--grass:#4fb344;--dirt:#8b5a2b;--stone:#394553;--ink:#20170d;--gold:#ffd35a;
+  --cream:#fff9d8;--green:#6bff8d;--blue:#bfe0ff;--red:#ff8f7d;
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:Trebuchet MS,system-ui,sans-serif;color:var(--cream);background:linear-gradient(#79c9ff,#c8f2ff 38%,#55b64d 38%,#3f8f37);padding-bottom:96px}
+button,input,textarea{font:inherit}
+.wrap{max-width:860px;margin:auto;padding:12px}
+.block{border:5px solid var(--ink);box-shadow:0 7px 0 var(--ink);background:var(--stone);padding:16px;margin-bottom:16px}
+.hero{background:linear-gradient(to bottom,var(--grass) 0 24px,var(--dirt) 24px)}
+h1,h2,h3{color:#fff3a8;text-shadow:2px 2px #000;margin-top:0}
+.hero h1{font-size:clamp(2rem,8vw,3.2rem);line-height:1;margin:8px 0 10px;text-transform:uppercase}
+.hero p,.task,.tip,.small,.pill-row{line-height:1.45}
+.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.hud div{border:3px solid var(--ink);background:#1e2530;padding:9px;text-align:center}
+.hud strong{display:block;color:var(--gold);font-size:.72rem;text-transform:uppercase}
+.progress{height:26px;border:4px solid var(--ink);background:#111820;overflow:hidden;margin:12px 0}
+.fill{height:100%;background:linear-gradient(90deg,#34d65f,#9eff7d);width:0}
+.agenda{display:grid;gap:8px}
+.agenda div,.task{border:3px solid var(--ink);background:rgba(0,0,0,.25);padding:11px}
+.answer{width:100%;min-height:50px;border:4px solid var(--ink);background:#fff;color:#111;padding:10px;margin-top:8px}
+.tip{border-left:7px solid var(--gold);background:#fff4b8;color:#2b1c0c;padding:11px}
+.launch,.pill{display:inline-block;text-align:center;text-decoration:none;border:4px solid var(--ink);box-shadow:0 4px var(--ink);background:var(--gold);color:var(--ink);padding:10px 12px;font-weight:900;text-transform:uppercase}
+.pill{background:var(--blue);margin:4px;padding:8px 10px;font-size:.92rem}
+.pill.active{background:var(--green)}
+.pill-row{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.percent-bar-wrap{border:4px solid var(--ink);background:#fff;color:#111;padding:12px}
+.percent-bar{height:34px;border:4px solid var(--ink);background:#dfe7ee;position:relative;overflow:hidden}
+.percent-fill{height:100%;background:linear-gradient(90deg,#35d75b,#a4ff7c);width:0%}
+.tick-row{display:grid;grid-template-columns:repeat(11,1fr);font-size:.72rem;margin-top:6px;color:#13202b}
+.tick-row span{text-align:center}
+.readout{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.readout div{border:3px solid var(--ink);background:#eaf3fb;padding:8px;text-align:center;font-weight:700}
+.hundred-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;max-width:360px;margin:12px auto}
+.cell{aspect-ratio:1/1;border:2px solid var(--ink);background:#fff;cursor:pointer}
+.cell.on{background:var(--green)}
+.strip{border:3px solid var(--ink);background:#fff;color:#111;padding:8px}
+.strip-label{font-weight:900;margin-bottom:6px}
+.strip-bar{display:grid;gap:3px;height:38px}
+.part{border:2px solid var(--ink);background:#dfe6ec}
+.part.on{background:var(--green)}
+.mob-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;max-width:340px;margin:10px auto}
+.mob{border:3px solid var(--ink);background:#fff;color:#111;padding:8px 4px;text-align:center;font-size:1.1rem;cursor:pointer}
+.mob.on{background:var(--green)}
+.score{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.score button{border:3px solid var(--ink);padding:10px;font-weight:900}
+.score button.selected{background:var(--green)}
+.small{font-size:.84rem;color:#d5e3f0}
+.table{width:100%;border-collapse:collapse;background:#fff;color:#111}
+.table th,.table td{border:3px solid var(--ink);padding:9px;text-align:center}
+.breakbox{text-align:center;font-size:1.06rem}
+.nav{position:fixed;left:0;right:0;bottom:0;background:#202733;border-top:5px solid var(--ink);padding:10px;z-index:20}
+.navin{max-width:860px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{min-height:52px;border:4px solid var(--ink);box-shadow:0 4px var(--ink);background:var(--gold);color:var(--ink);font-weight:900;text-transform:uppercase}
+.btn.secondary{background:var(--blue)}
+.hidden{display:none}
+.center{text-align:center}
+@media(max-width:700px){.grid2,.readout,.hud{grid-template-columns:1fr}.wrap{padding:8px}.block{padding:13px}.hero h1{font-size:2rem}.score{grid-template-columns:1fr}}
 </style>
 </head>
-<body><main class="wrap">
-<section class="block hero"><div>⛏️ NEXT MISSION</div><h1>Mine the Percent Vault</h1><p>Finish the remaining Skill Quest work, then connect fractions to benchmark percentages and restore Cy's pattern-recognition power.</p><div class="hud"><div><strong>Time</strong><span id="timer">60:00</span></div><div><strong>Mode</strong><span>Teach + Practice</span></div><div><strong>Goal</strong><span>Unlock Percent Sense</span></div></div><div class="progress"><div class="fill" id="fill"></div></div></section>
-<section id="s0" class="block"><h2>Mission Map</h2><div class="agenda"><div>🔥 <strong>Warm-Up Wins</strong> — 5 min</div><div>🎒 <strong>Finish Skill Quest</strong> — 12 min</div><div>💎 <strong>Percent Builder</strong> — 15 min</div><div>🎮 <strong>Minecraft Reset</strong> — 3 min</div><div>🔗 <strong>Fraction–Percent Bridge</strong> — 10 min</div><div>🧩 <strong>Pattern Upgrade</strong> — 8 min</div><div>🏆 <strong>Exit Portal</strong> — 7 min</div></div><div class="tip"><b>Tutor note:</b> The unfinished Skill Quest remains saved in the original browser. Open it on the same device and browser used last session.</div></section>
-<section id="s1" class="block hidden"><h2>Warm-Up: Spawn With a Win</h2><div class="task"><b>1. 6 + 4 × 3</b><input class="answer" data-k="w1"></div><div class="task"><b>2. Complete: 2/3 = ?/12</b><input class="answer" data-k="w2"></div><div class="task"><b>3. Continue: 5, 9, 13, 17, ___</b><input class="answer" data-k="w3"></div><div class="task"><b>What felt easier today than last session?</b><textarea class="answer" data-k="w4"></textarea></div></section>
-<section id="s2" class="block hidden"><h2>Resume the Skill Quest</h2><p>Continue from the exact point where you stopped. Do not restart completed sections.</p><a class="launch" href="https://mehinger01.github.io/skill-quest/" target="_blank" rel="noopener">Open Saved Skill Quest</a><div class="task"><b>Which section did you finish today?</b><input class="answer" data-k="sq1"></div><div class="task"><b>What was one strength you noticed?</b><textarea class="answer" data-k="sq2"></textarea></div><div class="task"><b>What still needs support?</b><textarea class="answer" data-k="sq3"></textarea></div></section>
-<section id="s3" class="block hidden"><h2>Percent Builder: Benchmark Ores</h2><div class="tip"><b>Fast strategy:</b> 50% means one-half, 25% means one-fourth, 10% means divide by 10, and 20% means find 10% and double it.</div><div class="craft" id="ores"><button class="ore" data-ore="50% = 1/2">50% = 1/2</button><button class="ore" data-ore="25% = 1/4">25% = 1/4</button><button class="ore" data-ore="75% = 3/4">75% = 3/4</button><button class="ore" data-ore="10% = 1/10">10% = 1/10</button></div><div class="task"><b>1. Find 25% of 80.</b><input class="answer" data-k="p1"></div><div class="task"><b>2. Find 50% of 36.</b><input class="answer" data-k="p2"></div><div class="task"><b>3. Find 10% of 70.</b><input class="answer" data-k="p3"></div><div class="task"><b>4. Find 20% of 50.</b><input class="answer" data-k="p4"></div><div class="task"><b>5. Find 75% of 20.</b><input class="answer" data-k="p5"></div><div class="task"><b>Explain one shortcut in your own words.</b><textarea class="answer" data-k="p6"></textarea></div></section>
-<section id="s4" class="block hidden"><h2>Minecraft Reset: Build in 30 Seconds</h2><div class="breakbox"><p>Name one block for the floor, walls, roof, and one special feature.</p><button class="btn" id="breakBtn" onclick="startBreak()">Start 30 Seconds</button><p id="breakText"></p></div><textarea class="answer" data-k="breakBuild" placeholder="Describe the build in one sentence..."></textarea></section>
-<section id="s5" class="block hidden"><h2>Fraction–Percent Bridge</h2><table class="table"><tr><th>Fraction</th><th>Decimal</th><th>Percent</th></tr><tr><td>1/2</td><td>0.5</td><td>50%</td></tr><tr><td>1/4</td><td>0.25</td><td>25%</td></tr><tr><td>3/4</td><td>0.75</td><td>75%</td></tr><tr><td>1/10</td><td>0.1</td><td>10%</td></tr></table><div class="task"><b>1. 1/2 = ___%</b><input class="answer" data-k="f1"></div><div class="task"><b>2. 1/4 = ___%</b><input class="answer" data-k="f2"></div><div class="task"><b>3. 3/4 = ___%</b><input class="answer" data-k="f3"></div><div class="task"><b>4. 50% = ___/4</b><input class="answer" data-k="f4"></div><div class="task"><b>5. 25% = ___/8</b><input class="answer" data-k="f5"></div><div class="task"><b>Why does knowing fractions make percent problems easier?</b><textarea class="answer" data-k="f6"></textarea></div></section>
-<section id="s6" class="block hidden"><h2>Pattern Upgrade</h2><div class="task"><b>1. 4, 8, 12, 16, ___</b><input class="answer" data-k="n1"></div><div class="task"><b>2. 30, 25, 20, 15, ___</b><input class="answer" data-k="n2"></div><div class="task"><b>3. 3, 6, 12, 24, ___</b><input class="answer" data-k="n3"></div><div class="task"><b>4. 2, 5, 8, 11, ___</b><input class="answer" data-k="n4"></div><div class="task"><b>5. 1, 4, 9, 16, ___</b><input class="answer" data-k="n5"></div><div class="task"><b>Describe the rule for one pattern.</b><textarea class="answer" data-k="n6"></textarea></div></section>
-<section id="s7" class="block hidden"><h2>Exit Portal</h2><div class="task"><b>1. Find 25% of 60.</b><input class="answer" data-k="e1"></div><div class="task"><b>2. Write 3/4 as a percent.</b><input class="answer" data-k="e2"></div><div class="task"><b>3. Continue: 7, 11, 15, 19, ___</b><input class="answer" data-k="e3"></div><div class="task"><b>4. Solve: 8 + 2 × 5</b><input class="answer" data-k="e4"></div><div class="task"><b>One strategy that helped me today was...</b><textarea class="answer" data-k="e5"></textarea></div><h3>Tutor Snapshot</h3><div class="score"><button data-score="Secure">Secure</button><button data-score="Developing">Developing</button><button data-score="Priority Gap">Priority Gap</button></div><textarea class="answer" data-k="notes" placeholder="Strengths, needs, fatigue, next steps..."></textarea><button class="btn" onclick="copySummary()">Copy Mission Summary</button><p class="small">Answers: warm-up 18, 8, 21. Percent practice 20, 18, 7, 10, 15. Bridge 50%, 25%, 75%, 2/4, 2/8. Patterns 20, 10, 48, 14, 25. Exit 15, 75%, 23, 18.</p></section>
-</main><nav class="nav"><div class="navin"><button class="btn secondary" onclick="move(-1)">← Back</button><button class="btn" onclick="move(1)">Save & Next →</button></div></nav>
+<body>
+<main class="wrap">
+<section class="block hero">
+  <div>⛏️ NEXT MISSION</div>
+  <h1>Mine the Percent Vault</h1>
+  <p>Go beyond the basics: finish the saved Skill Quest, then <b>see</b>, <b>build</b>, and <b>explain</b> percent ideas using grids, bars, sets, and fraction strips so benchmark percentages make sense instead of feeling random.</p>
+  <div class="hud">
+    <div><strong>Time</strong><span id="timer">60:00</span></div>
+    <div><strong>Mode</strong><span>Teach + Build + Practice</span></div>
+    <div><strong>Goal</strong><span>Unlock Percent Sense</span></div>
+    <div><strong>Main Tools</strong><span>Bars • Grids • Sets</span></div>
+  </div>
+  <div class="progress"><div class="fill" id="fill"></div></div>
+</section>
+
+<section id="s0" class="block">
+  <h2>Mission Map</h2>
+  <div class="agenda">
+    <div>🔥 <strong>Warm-Up Wins</strong> — 5 min</div>
+    <div>🎒 <strong>Finish Skill Quest</strong> — 10 min</div>
+    <div>📊 <strong>Percent Bar Visualizer</strong> — 8 min</div>
+    <div>🟩 <strong>100-Block Grid Lab</strong> — 10 min</div>
+    <div>🎮 <strong>Brain Break</strong> — 3 min</div>
+    <div>🧱 <strong>Fraction Strip Bridge</strong> — 8 min</div>
+    <div>🐾 <strong>Percent of a Set</strong> — 6 min</div>
+    <div>🧩 <strong>Pattern Upgrade</strong> — 4 min</div>
+    <div>🏆 <strong>Exit Portal</strong> — 6 min</div>
+  </div>
+  <div class="tip"><b>Tutor note:</b> This version is built to teach visually. Encourage Cy to point, count, and explain what he notices before solving. Open the unfinished Skill Quest on the same device/browser used last time so the saved progress appears.</div>
+</section>
+
+<section id="s1" class="block hidden">
+  <h2>Warm-Up: Spawn With a Win</h2>
+  <div class="grid2">
+    <div class="task"><b>1. 6 + 4 × 3</b><input class="answer" data-k="w1"></div>
+    <div class="task"><b>2. Complete: 2/3 = ?/12</b><input class="answer" data-k="w2"></div>
+    <div class="task"><b>3. Continue: 5, 9, 13, 17, ___</b><input class="answer" data-k="w3"></div>
+    <div class="task"><b>4. What felt easier today than last session?</b><textarea class="answer" data-k="w4"></textarea></div>
+  </div>
+</section>
+
+<section id="s2" class="block hidden">
+  <h2>Resume the Skill Quest</h2>
+  <a class="launch" href="https://mehinger01.github.io/skill-quest/" target="_blank" rel="noopener">Open Saved Skill Quest</a>
+  <div class="grid2">
+    <div class="task"><b>Which section did you finish today?</b><input class="answer" data-k="sq1"></div>
+    <div class="task"><b>What was one strength you noticed?</b><textarea class="answer" data-k="sq2"></textarea></div>
+    <div class="task"><b>What still needs support?</b><textarea class="answer" data-k="sq3"></textarea></div>
+    <div class="task"><b>Energy check:</b><textarea class="answer" data-k="sq4"></textarea></div>
+  </div>
+</section>
+
+<section id="s3" class="block hidden">
+  <h2>Percent Bar Visualizer</h2>
+  <div class="tip"><b>Big idea:</b> A percent means "out of 100." The bar below shows a whole amount. When part of the bar fills, that filled portion is the percent.</div>
+  <div class="percent-bar-wrap">
+    <label for="percentSlider"><b>Move the percent slider:</b> <span id="sliderVal">25%</span></label>
+    <input id="percentSlider" type="range" min="0" max="100" step="5" value="25" style="width:100%;margin:12px 0">
+    <div class="percent-bar"><div class="percent-fill" id="percentFill"></div></div>
+    <div class="tick-row"><span>0</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span><span>60</span><span>70</span><span>80</span><span>90</span><span>100</span></div>
+    <div class="readout">
+      <div><div>Percent</div><div id="roPercent">25%</div></div>
+      <div><div>Decimal</div><div id="roDecimal">0.25</div></div>
+      <div><div>Fraction Idea</div><div id="roFraction">1/4</div></div>
+    </div>
+  </div>
+  <div class="pill-row">
+    <button class="pill active" data-preset="10">10%</button>
+    <button class="pill" data-preset="25">25%</button>
+    <button class="pill" data-preset="50">50%</button>
+    <button class="pill" data-preset="75">75%</button>
+    <button class="pill" data-preset="100">100%</button>
+  </div>
+  <div class="grid2">
+    <div class="task"><b>What do you notice when the bar is at 50%?</b><textarea class="answer" data-k="bar1"></textarea></div>
+    <div class="task"><b>Which percent is easiest for you to picture, and why?</b><textarea class="answer" data-k="bar2"></textarea></div>
+  </div>
+</section>
+
+<section id="s4" class="block hidden">
+  <h2>100-Block Grid Lab</h2>
+  <div class="tip"><b>Manipulator:</b> This 10×10 wall has 100 blocks. Each block is worth <b>1%</b>. Click blocks to fill them, or use the quick-build buttons.</div>
+  <div class="pill-row center">
+    <button class="pill" onclick="setGridCount(10)">Show 10%</button>
+    <button class="pill" onclick="setGridCount(25)">Show 25%</button>
+    <button class="pill" onclick="setGridCount(50)">Show 50%</button>
+    <button class="pill" onclick="setGridCount(75)">Show 75%</button>
+    <button class="pill" onclick="setGridCount(0)">Clear</button>
+  </div>
+  <div class="hundred-grid" id="hundredGrid"></div>
+  <div class="readout">
+    <div><div>Filled Blocks</div><div id="gridCount">0</div></div>
+    <div><div>Percent</div><div id="gridPercent">0%</div></div>
+    <div><div>Fraction of 100</div><div id="gridFraction">0/100</div></div>
+  </div>
+  <div class="grid2">
+    <div class="task"><b>Use the grid to model 25% of 100. What do you see?</b><textarea class="answer" data-k="g1"></textarea></div>
+    <div class="task"><b>Why is 75% easy to show on a 100-block grid?</b><textarea class="answer" data-k="g2"></textarea></div>
+    <div class="task"><b>Find 25% of 80.</b><input class="answer" data-k="g3"></div>
+    <div class="task"><b>Find 10% of 70 and then 20% of 70.</b><input class="answer" data-k="g4"></div>
+  </div>
+</section>
+
+<section id="s5" class="block hidden">
+  <h2>Brain Break: Pokémon + LEGO Reset</h2>
+  <div class="breakbox">
+    <p>Pick one quick reset and do it for 30–45 seconds.</p>
+    <div class="pill-row center">
+      <button class="pill" onclick="showBreak('Do 5 Pikachu jumps, 5 Squirtle squats, and strike your strongest trainer pose.')">Pokémon Power-Up</button>
+      <button class="pill" onclick="showBreak('Pretend you found 4 LEGO bricks. Mime snapping them together into the tallest tower you can imagine.')">LEGO Air Build</button>
+      <button class="pill" onclick="showBreak('Freeze like a Pokémon statue for 10 seconds, then shake out your arms and restart.')">Freeze Quest</button>
+    </div>
+    <p id="breakText"></p>
+  </div>
+  <textarea class="answer" data-k="break1" placeholder="Which break did you choose?"></textarea>
+</section>
+
+<section id="s6" class="block hidden">
+  <h2>Fraction Strip Bridge</h2>
+  <div class="tip"><b>Bridge idea:</b> Benchmark percents connect to fractions you already know. Tap the strip buttons and compare how much of the whole is shaded.</div>
+  <div class="pill-row">
+    <button class="pill active" onclick="setStrip('half',this)">1/2 = 50%</button>
+    <button class="pill" onclick="setStrip('quarter',this)">1/4 = 25%</button>
+    <button class="pill" onclick="setStrip('threequarters',this)">3/4 = 75%</button>
+    <button class="pill" onclick="setStrip('tenth',this)">1/10 = 10%</button>
+  </div>
+  <div class="strip">
+    <div class="strip-label" id="stripTitle">1/2 of the whole = 50%</div>
+    <div class="strip-bar" id="stripBar"></div>
+  </div>
+  <table class="table" style="margin-top:12px">
+    <tr><th>Fraction</th><th>Decimal</th><th>Percent</th></tr>
+    <tr><td>1/2</td><td>0.5</td><td>50%</td></tr>
+    <tr><td>1/4</td><td>0.25</td><td>25%</td></tr>
+    <tr><td>3/4</td><td>0.75</td><td>75%</td></tr>
+    <tr><td>1/10</td><td>0.1</td><td>10%</td></tr>
+  </table>
+  <div class="grid2">
+    <div class="task"><b>1. 1/2 = ___%</b><input class="answer" data-k="f1"></div>
+    <div class="task"><b>2. 1/4 = ___%</b><input class="answer" data-k="f2"></div>
+    <div class="task"><b>3. 3/4 = ___%</b><input class="answer" data-k="f3"></div>
+    <div class="task"><b>4. Why does 25% match 1/4?</b><textarea class="answer" data-k="f4"></textarea></div>
+  </div>
+</section>
+
+<section id="s7" class="block hidden">
+  <h2>Percent of a Set</h2>
+  <div class="tip"><b>Another model:</b> Percent can describe part of a group, not just part of a bar. Below are 20 Pokémon eggs. Tap to select some. Then figure out what percent of the set is selected.</div>
+  <div class="pill-row center">
+    <button class="pill" onclick="setMobCount(5)">Show 25%</button>
+    <button class="pill" onclick="setMobCount(10)">Show 50%</button>
+    <button class="pill" onclick="setMobCount(15)">Show 75%</button>
+    <button class="pill" onclick="setMobCount(0)">Clear</button>
+  </div>
+  <div class="mob-grid" id="mobGrid"></div>
+  <div class="readout">
+    <div><div>Selected</div><div id="mobCount">0 of 20</div></div>
+    <div><div>Percent</div><div id="mobPercent">0%</div></div>
+    <div><div>Fraction</div><div id="mobFraction">0/20</div></div>
+  </div>
+  <div class="grid2">
+    <div class="task"><b>What percent is 5 out of 20?</b><input class="answer" data-k="m1"></div>
+    <div class="task"><b>What percent is 15 out of 20?</b><input class="answer" data-k="m2"></div>
+    <div class="task"><b>Explain how you could find 50% of 18.</b><textarea class="answer" data-k="m3"></textarea></div>
+    <div class="task"><b>Explain how you could find 25% of 40.</b><textarea class="answer" data-k="m4"></textarea></div>
+  </div>
+</section>
+
+<section id="s8" class="block hidden">
+  <h2>Pattern Upgrade</h2>
+  <div class="grid2">
+    <div class="task"><b>1. 4, 8, 12, 16, ___</b><input class="answer" data-k="n1"></div>
+    <div class="task"><b>2. 30, 25, 20, 15, ___</b><input class="answer" data-k="n2"></div>
+    <div class="task"><b>3. 3, 6, 12, 24, ___</b><input class="answer" data-k="n3"></div>
+    <div class="task"><b>4. 2, 5, 8, 11, ___</b><input class="answer" data-k="n4"></div>
+    <div class="task"><b>5. 1, 4, 9, 16, ___</b><input class="answer" data-k="n5"></div>
+    <div class="task"><b>Describe the rule for one pattern.</b><textarea class="answer" data-k="n6"></textarea></div>
+  </div>
+</section>
+
+<section id="s9" class="block hidden">
+  <h2>Exit Portal</h2>
+  <div class="grid2">
+    <div class="task"><b>1. Find 25% of 60.</b><input class="answer" data-k="e1"></div>
+    <div class="task"><b>2. Write 3/4 as a percent.</b><input class="answer" data-k="e2"></div>
+    <div class="task"><b>3. Continue: 7, 11, 15, 19, ___</b><input class="answer" data-k="e3"></div>
+    <div class="task"><b>4. Solve: 8 + 2 × 5</b><input class="answer" data-k="e4"></div>
+    <div class="task"><b>One strategy that helped me today was...</b><textarea class="answer" data-k="e5"></textarea></div>
+    <div class="task"><b>How do percent bars, 100-grids, and fraction strips connect?</b><textarea class="answer" data-k="e6"></textarea></div>
+  </div>
+  <h3>Tutor Snapshot</h3>
+  <div class="score">
+    <button data-score="Secure">Secure</button>
+    <button data-score="Developing">Developing</button>
+    <button data-score="Priority Gap">Priority Gap</button>
+  </div>
+  <textarea class="answer" data-k="notes" placeholder="Strengths, misconceptions, stamina, next steps..."></textarea>
+  <button class="launch" onclick="copySummary()">Copy Mission Summary</button>
+  <p class="small">Key answers: warm-up 18, 8, 21. Grid lab 25% of 80 = 20; 10% of 70 = 7, 20% of 70 = 14. Fraction bridge 50%, 25%, 75%. Set model 5/20 = 25%, 15/20 = 75%. Patterns 20, 10, 48, 14, 25. Exit 15, 75%, 23, 18.</p>
+</section>
+</main>
+
+<nav class="nav"><div class="navin"><button class="btn secondary" onclick="move(-1)">← Back</button><button class="btn" onclick="move(1)">Save & Next →</button></div></nav>
+
 <script>
-const STORE='vtCyPercentPatternsV1';let state={section:0,answers:{},choices:{},score:''};let total=8;let started=Date.now();
-function save(){document.querySelectorAll('[data-k]').forEach(x=>state.answers[x.dataset.k]=x.value);localStorage.setItem(STORE,JSON.stringify(state))}
-function load(){try{state=Object.assign(state,JSON.parse(localStorage.getItem(STORE)||'{}'))}catch(e){}document.querySelectorAll('[data-k]').forEach(x=>x.value=state.answers[x.dataset.k]||'');document.querySelectorAll('[data-ore]').forEach(b=>{if(state.choices[b.dataset.ore])b.classList.add('on')});document.querySelectorAll('[data-score]').forEach(b=>{if(state.score===b.dataset.score)b.classList.add('selected')})}
-function show(){for(let i=0;i<total;i++)document.getElementById('s'+i).classList.toggle('hidden',i!==state.section);document.getElementById('fill').style.width=((state.section+1)/total*100)+'%';window.scrollTo({top:0,behavior:'smooth'})}
-function move(d){save();state.section=Math.max(0,Math.min(total-1,state.section+d));save();show()}
-document.querySelectorAll('[data-ore]').forEach(b=>b.onclick=()=>{b.classList.toggle('on');state.choices[b.dataset.ore]=b.classList.contains('on');save()});document.querySelectorAll('[data-score]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-score]').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');state.score=b.dataset.score;save()});document.querySelectorAll('[data-k]').forEach(x=>x.addEventListener('input',save));
-function startBreak(){let n=30,btn=document.getElementById('breakBtn'),txt=document.getElementById('breakText');btn.disabled=true;let t=setInterval(()=>{txt.textContent=n+' seconds';n--;if(n<0){clearInterval(t);txt.textContent='Build complete!';btn.disabled=false}},1000)}
-function copySummary(){save();let lines=['Cy Percent & Pattern Mission',new Date().toLocaleString(),'Overall: '+(state.score||'Not rated'),''];Object.entries(state.answers).forEach(([k,v])=>{if(v)lines.push(k+': '+v)});navigator.clipboard.writeText(lines.join('\n')).then(()=>alert('Mission summary copied.')).catch(()=>alert('Copy unavailable.'))}
-setInterval(()=>{let remaining=Math.max(0,3600-Math.floor((Date.now()-started)/1000)),m=String(Math.floor(remaining/60)).padStart(2,'0'),s=String(remaining%60).padStart(2,'0');document.getElementById('timer').textContent=m+':'+s},1000);load();show();setInterval(save,3000);
-</script></body></html>
+const STORE='vtCyPercentPatternsV2';
+let state={section:0,answers:{},score:'',gridCount:0,mobCount:0,slider:25,strip:'half'};
+const total=10;
+let started=Date.now();
+
+function save(){
+  document.querySelectorAll('[data-k]').forEach(x=>state.answers[x.dataset.k]=x.value);
+  localStorage.setItem(STORE,JSON.stringify(state));
+}
+function load(){
+  try{state=Object.assign(state,JSON.parse(localStorage.getItem(STORE)||'{}'))}catch(e){}
+  document.querySelectorAll('[data-k]').forEach(x=>x.value=state.answers[x.dataset.k]||'');
+  document.querySelectorAll('[data-score]').forEach(b=>{if(state.score===b.dataset.score)b.classList.add('selected')});
+}
+function show(){
+  for(let i=0;i<total;i++) document.getElementById('s'+i).classList.toggle('hidden',i!==state.section);
+  document.getElementById('fill').style.width=((state.section+1)/total*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+  save();
+}
+function move(d){
+  save();
+  state.section=Math.max(0,Math.min(total-1,state.section+d));
+  show();
+}
+function updateTimer(){
+  let elapsed=Math.floor((Date.now()-started)/1000),remain=Math.max(0,3600-elapsed);
+  let m=String(Math.floor(remain/60)).padStart(2,'0'),s=String(remain%60).padStart(2,'0');
+  document.getElementById('timer').textContent=`${m}:${s}`;
+}
+setInterval(updateTimer,1000);
+
+document.addEventListener('input',e=>{if(e.target.matches('[data-k]')) save()});
+document.querySelectorAll('[data-score]').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('[data-score]').forEach(x=>x.classList.remove('selected'));
+  b.classList.add('selected');
+  state.score=b.dataset.score;
+  save();
+});
+
+function fractionIdea(p){
+  const map={0:'0',10:'1/10',25:'1/4',50:'1/2',75:'3/4',100:'1 whole'};
+  if(map[p]!==undefined) return map[p];
+  return `${p}/100`;
+}
+function updateSlider(v){
+  state.slider=Number(v);
+  document.getElementById('percentSlider').value=v;
+  document.getElementById('sliderVal').textContent=v+'%';
+  document.getElementById('roPercent').textContent=v+'%';
+  document.getElementById('roDecimal').textContent=(v/100).toFixed(v%10===0?1:2).replace(/0$/,'').replace(/\.$/,'');
+  document.getElementById('roFraction').textContent=fractionIdea(Number(v));
+  document.getElementById('percentFill').style.width=v+'%';
+  document.querySelectorAll('[data-preset]').forEach(btn=>btn.classList.toggle('active',Number(btn.dataset.preset)===Number(v)));
+  save();
+}
+document.getElementById('percentSlider').addEventListener('input',e=>updateSlider(e.target.value));
+document.querySelectorAll('[data-preset]').forEach(btn=>btn.onclick=()=>updateSlider(btn.dataset.preset));
+
+const grid=document.getElementById('hundredGrid');
+for(let i=0;i<100;i++){
+  let d=document.createElement('button');
+  d.className='cell';
+  d.type='button';
+  d.onclick=()=>{const idx=i+1;state.gridCount = idx<=state.gridCount ? idx-1 : idx;renderGrid();};
+  grid.appendChild(d);
+}
+function renderGrid(){
+  [...grid.children].forEach((c,i)=>c.classList.toggle('on',i<state.gridCount));
+  document.getElementById('gridCount').textContent=state.gridCount;
+  document.getElementById('gridPercent').textContent=state.gridCount+'%';
+  document.getElementById('gridFraction').textContent=state.gridCount+'/100';
+  save();
+}
+function setGridCount(n){state.gridCount=n;renderGrid();}
+
+const mobGrid=document.getElementById('mobGrid');
+for(let i=0;i<20;i++){
+  let d=document.createElement('button');
+  d.className='mob';
+  d.type='button';
+  d.textContent='🥚';
+  d.onclick=()=>{const idx=i+1;state.mobCount = idx<=state.mobCount ? idx-1 : idx;renderMobs();};
+  mobGrid.appendChild(d);
+}
+function renderMobs(){
+  [...mobGrid.children].forEach((c,i)=>c.classList.toggle('on',i<state.mobCount));
+  document.getElementById('mobCount').textContent=`${state.mobCount} of 20`;
+  document.getElementById('mobPercent').textContent=(state.mobCount*5)+'%';
+  document.getElementById('mobFraction').textContent=`${state.mobCount}/20`;
+  save();
+}
+function setMobCount(n){state.mobCount=n;renderMobs();}
+
+const stripBar=document.getElementById('stripBar');
+function buildParts(total,on){
+  stripBar.innerHTML='';
+  stripBar.style.gridTemplateColumns=`repeat(${total},1fr)`;
+  for(let i=0;i<total;i++){
+    let p=document.createElement('div');
+    p.className='part'+(i<on?' on':'');
+    stripBar.appendChild(p);
+  }
+}
+function setStrip(mode,btn){
+  state.strip=mode;
+  document.querySelectorAll('#s6 .pill').forEach(p=>p.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  const title=document.getElementById('stripTitle');
+  if(mode==='half'){title.textContent='1/2 of the whole = 50%';buildParts(2,1)}
+  if(mode==='quarter'){title.textContent='1/4 of the whole = 25%';buildParts(4,1)}
+  if(mode==='threequarters'){title.textContent='3/4 of the whole = 75%';buildParts(4,3)}
+  if(mode==='tenth'){title.textContent='1/10 of the whole = 10%';buildParts(10,1)}
+  save();
+}
+
+function showBreak(text){
+  document.getElementById('breakText').textContent=text;
+}
+function copySummary(){
+  save();
+  const text=`Cy Percent Vault Summary
+
+Section reached: ${state.section+1}/${total}
+Score: ${state.score||'not selected'}
+Warm-up: ${state.answers.w1||''}, ${state.answers.w2||''}, ${state.answers.w3||''}
+Skill Quest notes: ${state.answers.sq2||''} / ${state.answers.sq3||''}
+Visual notes: ${state.answers.bar1||''} ${state.answers.g1||''} ${state.answers.f4||''}
+Set model notes: ${state.answers.m3||''} ${state.answers.m4||''}
+Exit: ${state.answers.e1||''}, ${state.answers.e2||''}, ${state.answers.e3||''}, ${state.answers.e4||''}
+Tutor notes: ${state.answers.notes||''}`;
+  navigator.clipboard.writeText(text).then(()=>alert('Mission summary copied!'));
+}
+
+load();
+updateSlider(state.slider||25);
+setGridCount(state.gridCount||0);
+setMobCount(state.mobCount||0);
+setStrip(state.strip||'half',document.querySelector('#s6 .pill'));
+show();
+</script>
+</body>
+</html>
